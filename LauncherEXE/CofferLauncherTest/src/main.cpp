@@ -1,13 +1,14 @@
 #include <Windows.h>
-
+#include <WinHttpComm/include/Request.h>
+#pragma comment(lib, "WinHttpComm.lib")
 
 int main()
 {
-	typedef int (*fp_WinHttpPost)();
-	HMODULE hMod = LoadLibrary(L"WinHttpComm.dll");
-	LPCSTR my_str = "POST";
-	fp_WinHttpPost req = (fp_WinHttpPost)GetProcAddress(hMod, my_str);
-	req();
+//	POST();
+
+	CRequest& request = CRequest::GetInst();
+	request.SetMethod(kGET);
+	request.Request();
 	
 
 	return 0;
