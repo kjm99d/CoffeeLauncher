@@ -201,6 +201,7 @@
   <ItemGroup>
     <ClInclude Include="include\CoffeeMgr.h" />
     <ClInclude Include="include\CoffeeMgrDlg.h" />
+    <ClInclude Include="include\Common\MessageID.h" />
     <ClInclude Include="include\framework.h" />
     <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\Resource.h" />
@@ -212,13 +213,7 @@
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\CoffeeMgr.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="res\CoffeeMgr.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\CoffeeMgr.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

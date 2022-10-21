@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Common">
+      <UniqueIdentifier>{34aa367d-95fe-4dc8-86ad-6cc07705eb4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.h">
@@ -33,6 +36,9 @@
     <ClInclude Include="include\framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="include\Common\MessageID.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CoffeeMgrDlg.cpp">
@@ -46,18 +52,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\CoffeeMgr.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="res\CoffeeMgr.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\CoffeeMgr.rc2">
-      <Filter>리소스 파일</Filter>
-    </None>
   </ItemGroup>
 </Project>
