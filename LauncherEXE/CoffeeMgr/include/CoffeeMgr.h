@@ -26,6 +26,10 @@ public:
 
 // 구현입니다.
 
+
+protected:
+
+	
 	DECLARE_MESSAGE_MAP()
 };
 

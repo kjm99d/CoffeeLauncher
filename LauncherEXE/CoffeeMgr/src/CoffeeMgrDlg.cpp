@@ -12,6 +12,7 @@
 #define new DEBUG_NEW
 #endif
 
+#include "MessageID.h"
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -66,6 +67,7 @@ BEGIN_MESSAGE_MAP(CCoffeeMgrDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	
 END_MESSAGE_MAP()
 
 
@@ -105,6 +107,8 @@ BOOL CCoffeeMgrDlg::OnInitDialog()
 		L"메세지박스 Unicode 테스트\n" \
 		L"이모지 테스트 🤦‍♂️",
 		L"😂");
+
+	RegisterTrayIcon();
 
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -158,4 +162,26 @@ HCURSOR CCoffeeMgrDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
+
+void CCoffeeMgrDlg::RegisterTrayIcon()
+{
+	NOTIFYICONDATA nid;
+	nid.cbSize = sizeof(nid);
+	nid.hWnd = m_hWnd;
+	nid.uID = IDR_MAINFRAME;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+	nid.uCallbackMessage = WM_TRAYICON_MSG;
+	nid.hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	
+	TCHAR strTitle[256];
+	GetWindowText(strTitle, sizeof(strTitle));
+	_tcscpy_s(nid.szTip, strTitle);
+
+	Shell_NotifyIcon(NIM_ADD, &nid);
+	SendMessage(WM_SETICON, static_cast<WPARAM>(TRUE), reinterpret_cast<LPARAM>(nid.hIcon));
+
+
+
+}
+
 

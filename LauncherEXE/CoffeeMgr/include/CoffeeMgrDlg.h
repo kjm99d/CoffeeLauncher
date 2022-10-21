@@ -30,5 +30,11 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+
+private:
+	void RegisterTrayIcon();
+
+
+
 	DECLARE_MESSAGE_MAP()
 };

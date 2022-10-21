@@ -11,7 +11,7 @@
 #define new DEBUG_NEW
 #endif
 
-
+#include "MessageID.h"
 // CCoffeeMgrApp
 
 BEGIN_MESSAGE_MAP(CCoffeeMgrApp, CWinApp)
@@ -104,4 +104,3 @@ BOOL CCoffeeMgrApp::InitInstance()
 	// 반환합니다.
 	return FALSE;
 }
-
