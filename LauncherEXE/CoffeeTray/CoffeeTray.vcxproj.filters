@@ -13,63 +13,50 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="헤더 파일\Common">
-      <UniqueIdentifier>{34aa367d-95fe-4dc8-86ad-6cc07705eb4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\res">
-      <UniqueIdentifier>{bc274754-b054-424d-b4ab-c66eb701bc27}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\pch.h">
+    <ClInclude Include="CoffeeTray.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\Resource.h">
+    <ClInclude Include="CoffeeTrayDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\targetver.h">
+    <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\CoffeeMgr.h">
+    <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\CoffeeMgrDlg.h">
+    <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Common\MessageID.h">
-      <Filter>헤더 파일\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="res\Resource.h">
-      <Filter>헤더 파일\res</Filter>
-    </ClInclude>
-    <ClInclude Include="include\CoffeeMgrTray.h">
+    <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\CoffeeMgrDlg.cpp">
+    <ClCompile Include="CoffeeTray.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\pch.cpp">
+    <ClCompile Include="CoffeeTrayDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\CoffeeMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CoffeeMgrTray.cpp">
+    <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\CoffeeMgr.rc">
+    <ResourceCompile Include="CoffeeTray.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\CoffeeMgr.ico">
+    <None Include="res\CoffeeTray.rc2">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\CoffeeTray.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

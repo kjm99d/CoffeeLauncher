@@ -1,20 +1,20 @@
 ﻿
-// CoffeeMgrDlg.cpp: 구현 파일
+// CoffeeTrayDlg.cpp: 구현 파일
 //
 
 #include "pch.h"
 #include "framework.h"
-#include "CoffeeMgr.h"
-#include "CoffeeMgrDlg.h"
+#include "CoffeeTray.h"
+#include "CoffeeTrayDlg.h"
 #include "afxdialogex.h"
-#include <res/Resource.h>
 
+#include "MessageID.h"
+#include "resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-#include "MessageID.h"
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -38,7 +38,6 @@ protected:
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 {
-	
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
@@ -50,40 +49,35 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CCoffeeMgrDlg 대화 상자
+// CCoffeeTrayDlg 대화 상자
 
 
 
-CCoffeeMgrDlg::CCoffeeMgrDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_COFFEEMGR_DIALOG, pParent)
+CCoffeeTrayDlg::CCoffeeTrayDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_COFFEETRAY_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	pTray = new CCoffeeMgrTray(m_hWnd, pParent);
-	
-	
-
 }
 
-void CCoffeeMgrDlg::DoDataExchange(CDataExchange* pDX)
+void CCoffeeTrayDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CCoffeeMgrDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CCoffeeTrayDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 
-	
-	//ON_MESSAGE(WM_TRAYICON_MSG, TrayIconMessage)	// TrayIconMessage
-	//ON_COMMAND()
-	
+	ON_MESSAGE(WM_TRAYICON_MSG, TrayIconMessage)
+
+	ON_COMMAND(ID_MENU_UPDATE_CHECK, UpdateCheck)
 END_MESSAGE_MAP()
 
 
-// CCoffeeMgrDlg 메시지 처리기
+// CCoffeeTrayDlg 메시지 처리기
 
-BOOL CCoffeeMgrDlg::OnInitDialog()
+BOOL CCoffeeTrayDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -113,20 +107,14 @@ BOOL CCoffeeMgrDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	MessageBox(
-		L"메세지박스 Unicode 테스트\n" \
-		L"이모지 테스트 🤦‍♂️",
-		L"😂");
-	pTray->SetHWND(m_hWnd);
-	pTray->RegisterTray();
-	//RegisterTrayIcon();
-	//ShowWindow(SW_HIDE);
-
+	RegisterTrayIcon();
+	ShowWindow(SW_SHOWMINIMIZED);//! 최소화후 숨겨야 화면에 나타나지 않음
+	PostMessage(WM_SHOWWINDOW, FALSE, SW_OTHERUNZOOM);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
-void CCoffeeMgrDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CCoffeeTrayDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -143,7 +131,7 @@ void CCoffeeMgrDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 애플리케이션의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
-void CCoffeeMgrDlg::OnPaint()
+void CCoffeeTrayDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -170,12 +158,12 @@ void CCoffeeMgrDlg::OnPaint()
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
-HCURSOR CCoffeeMgrDlg::OnQueryDragIcon()
+HCURSOR CCoffeeTrayDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CCoffeeMgrDlg::RegisterTrayIcon()
+void CCoffeeTrayDlg::RegisterTrayIcon()
 {
 	NOTIFYICONDATA nid;
 	nid.cbSize = sizeof(nid);
@@ -184,7 +172,7 @@ void CCoffeeMgrDlg::RegisterTrayIcon()
 	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
 	nid.uCallbackMessage = WM_TRAYICON_MSG;
 	nid.hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	
+
 	TCHAR strTitle[256];
 	GetWindowText(strTitle, sizeof(strTitle));
 	_tcscpy_s(nid.szTip, strTitle);
@@ -196,36 +184,38 @@ void CCoffeeMgrDlg::RegisterTrayIcon()
 
 }
 
-#if 0
-LRESULT CCoffeeMgrDlg::TrayIconMessage(WPARAM wParam, LPARAM lParam)
+void CCoffeeTrayDlg::UpdateCheck()
+{
+	MessageBox(L"버튼 클릭");
+}
+
+LRESULT CCoffeeTrayDlg::TrayIconMessage(WPARAM wParam, LPARAM lParam)
 {
 	CMenu menu, * pSubMenu;
 
 	switch (lParam)
 	{
-		case WM_RBUTTONDOWN:
-		{
-			CMenu menu, * pSubMenu;
+	case WM_RBUTTONDOWN:
+	{
+		CMenu menu, * pSubMenu;
 
-			if (!menu.LoadMenu(IDR_MENU_TRAY))
-				return 0;
-			if (!(pSubMenu = menu.GetSubMenu(0)))
-				return 0;
+		if (!menu.LoadMenu(IDR_MENU_TRAY))
+			return 0;
+		if (!(pSubMenu = menu.GetSubMenu(0)))
+			return 0;
 
-			CPoint pos;
-			GetCursorPos(&pos);
-			SetForegroundWindow();
+		CPoint pos;
+		GetCursorPos(&pos);
+		SetForegroundWindow();
 
-			// 컨텍스트 메뉴 출력
-			pSubMenu->TrackPopupMenu(TPM_RIGHTALIGN, pos.x, pos.y, this);
-			menu.DestroyMenu();
+		// 컨텍스트 메뉴 출력
+		pSubMenu->TrackPopupMenu(TPM_RIGHTALIGN, pos.x, pos.y, this);
+		menu.DestroyMenu();
 
-			break;
-		}
+		break;
+	}
 	}
 
 
 	return LRESULT();
 }
-#endif
-

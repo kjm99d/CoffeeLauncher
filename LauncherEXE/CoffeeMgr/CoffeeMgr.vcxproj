@@ -29,14 +29,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -44,14 +44,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -78,25 +78,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include\Common\;$(ProjectDir)include\;$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -201,19 +201,25 @@
   <ItemGroup>
     <ClInclude Include="include\CoffeeMgr.h" />
     <ClInclude Include="include\CoffeeMgrDlg.h" />
+    <ClInclude Include="include\CoffeeMgrTray.h" />
     <ClInclude Include="include\Common\MessageID.h" />
     <ClInclude Include="include\framework.h" />
     <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\Resource.h" />
     <ClInclude Include="include\targetver.h" />
+    <ClInclude Include="res\Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CoffeeMgr.cpp" />
     <ClCompile Include="src\CoffeeMgrDlg.cpp" />
+    <ClCompile Include="src\CoffeeMgrTray.cpp" />
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\CoffeeMgr.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\CoffeeMgr.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

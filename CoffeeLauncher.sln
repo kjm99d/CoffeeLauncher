@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32901.82
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LauncherEXE", "LauncherEXE", "{EFA023DE-304C-4964-B1E0-8C35FB50A29B}"
 EndProject
@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LauncherDLL", "LauncherDLL"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinHttpComm", "LauncherDLL\WinHttpComm\WinHttpComm.vcxproj", "{4E25308E-7F93-4295-9AA7-3E62B44C4974}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeMgr", "LauncherEXE\CoffeeMgr\CoffeeMgr.vcxproj", "{A35A5917-4DD4-4EE0-B046-5107362A9DF4}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeLauncherTest", "LauncherEXE\CoffeeLauncherTest\CoffeeLauncherTest.vcxproj", "{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeTray", "LauncherEXE\CoffeeTray\CoffeeTray.vcxproj", "{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +29,6 @@ Global
 		{4E25308E-7F93-4295-9AA7-3E62B44C4974}.Release|x64.Build.0 = Release|x64
 		{4E25308E-7F93-4295-9AA7-3E62B44C4974}.Release|x86.ActiveCfg = Release|Win32
 		{4E25308E-7F93-4295-9AA7-3E62B44C4974}.Release|x86.Build.0 = Release|Win32
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Debug|x64.ActiveCfg = Debug|x64
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Debug|x64.Build.0 = Debug|x64
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Debug|x86.ActiveCfg = Debug|Win32
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Debug|x86.Build.0 = Debug|Win32
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Release|x64.ActiveCfg = Release|x64
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Release|x64.Build.0 = Release|x64
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Release|x86.ActiveCfg = Release|Win32
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4}.Release|x86.Build.0 = Release|Win32
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}.Debug|x64.ActiveCfg = Debug|x64
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}.Debug|x64.Build.0 = Debug|x64
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}.Debug|x86.ActiveCfg = Debug|Win32
@@ -45,14 +37,22 @@ Global
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}.Release|x64.Build.0 = Release|x64
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}.Release|x86.ActiveCfg = Release|Win32
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}.Release|x86.Build.0 = Release|Win32
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Debug|x64.ActiveCfg = Debug|x64
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Debug|x64.Build.0 = Debug|x64
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Debug|x86.ActiveCfg = Debug|Win32
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Debug|x86.Build.0 = Debug|Win32
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Release|x64.ActiveCfg = Release|x64
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Release|x64.Build.0 = Release|x64
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Release|x86.ActiveCfg = Release|Win32
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4E25308E-7F93-4295-9AA7-3E62B44C4974} = {D2FCD713-796B-4B9D-A526-84ABBF51C737}
-		{A35A5917-4DD4-4EE0-B046-5107362A9DF4} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
 		{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
+		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1CA441B-381F-4E22-A19F-F96FC8CCEC90}

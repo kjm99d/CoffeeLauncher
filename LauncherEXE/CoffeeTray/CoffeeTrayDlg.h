@@ -1,25 +1,31 @@
 ﻿
-// CoffeeMgrDlg.h: 헤더 파일
+// CoffeeTrayDlg.h: 헤더 파일
 //
 
 #pragma once
-#include <CoffeeMgrTray.h>
 
-// CCoffeeMgrDlg 대화 상자
-class CCoffeeMgrDlg : public CDialogEx
+
+// CCoffeeTrayDlg 대화 상자
+class CCoffeeTrayDlg : public CDialogEx
 {
 // 생성입니다.
 public:
-	CCoffeeMgrDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
-	CCoffeeMgrTray* pTray;
+	CCoffeeTrayDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_COFFEEMGR_DIALOG };
+	enum { IDD = IDD_COFFEETRAY_DIALOG };
 #endif
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
+
+private:
+	void RegisterTrayIcon();
+	void UpdateCheck();
+
+protected:
+	afx_msg	LRESULT TrayIconMessage(WPARAM wParam, LPARAM lParam);
 
 
 // 구현입니다.
@@ -31,11 +37,5 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
-
-private:
-	void RegisterTrayIcon();
-
-
-
 	DECLARE_MESSAGE_MAP()
 };
