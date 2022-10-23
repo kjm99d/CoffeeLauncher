@@ -59,12 +59,15 @@ CCoffeeLoginDlg::CCoffeeLoginDlg(CWnd* pParent /*=nullptr*/)
 void CCoffeeLoginDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT_LOGIN_ID, m_edit_login_id);
+	DDX_Control(pDX, IDC_EDIT_LOGIN_PW, m_edit_login_pw);
 }
 
 BEGIN_MESSAGE_MAP(CCoffeeLoginDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_LOGIN, &CCoffeeLoginDlg::OnBnClickedButtonLogin)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +156,21 @@ HCURSOR CCoffeeLoginDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CCoffeeLoginDlg::OnBnClickedButtonLogin()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strUserId, strUserPw;
+	m_edit_login_id.GetWindowTextW(strUserId);
+	m_edit_login_pw.GetWindowTextW(strUserPw);
+
+	if (strUserId.IsEmpty() || strUserPw.IsEmpty())
+	{
+		MessageBox(L"아이디 또는 비밀번호를 확인 해주세요");
+
+		return void();
+	}
+
+
+}

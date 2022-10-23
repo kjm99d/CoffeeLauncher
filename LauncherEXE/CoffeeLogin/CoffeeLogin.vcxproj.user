@@ -16,4 +16,7 @@
     <LocalDebuggerWorkingDirectory>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup>
+    <RESOURCE_FILE>CoffeeLogin.rc</RESOURCE_FILE>
+  </PropertyGroup>
 </Project>
