@@ -1,32 +1,10 @@
 #include "Request.h"
 
-#include <iostream>
-#include <Windows.h>
-#include <Winhttp.h>
+
 #pragma comment (lib, "winhttp.lib")
 
 // ======================================================================= //
-static CRequest& inst = CRequest::GetInst();
-// ======================================================================= //
-
-int POST()
-{
-	inst.SetMethod(kGET);
-	inst.SetURL(L"https://api.ip.pe.kr/");
-	inst.Request();
-
-	return 0;
-}
-
-int GET()
-{
-	inst;
-	return 0;
-
-}
-
-// ======================================================================= //
-CRequest::CRequest()
+CRequest::CRequest() : hSession(NULL)
 {
 	OutputDebugString(L"CRequest Init()");
 }
@@ -37,53 +15,17 @@ CRequest::~CRequest()
 
 }
 
-CRequest& CRequest::GetInst()
+int CRequest::Request()
 {
-	static CRequest inst;
-	return inst;
-}
 
-void CRequest::Request()
-{
-	switch (m_method)
-	{
-	case RequestMethod::kGET:
-		GET();
-		break;
-
-	case RequestMethod::kPOST:
-		break;
-
-	default:
-		break;
-	}
-}
-
-void CRequest::SetMethod(RequestMethod method)
-{
-	m_method = method;
-}
-
-void CRequest::SetURL(const TCHAR* url)
-{
-	m_url = url;
-}
-
-bool CRequest::POST()
-{
-	return false;
-}
-
-bool CRequest::GET()
-{
-	HINTERNET      hSession, hConnect, hRequest;
+	HINTERNET      hConnect, hRequest;
 	URL_COMPONENTS urlComponents;
 	WCHAR          szHostName[256], szUrlPath[2048];
-	WCHAR          szUrl[] = L"https://api.ip.pe.kr/";
 	DWORD          dwSize;
 	DWORD          dwStatusCode;
 	BYTE           buffer[4096];
-	memset(buffer, 0x00, 4096);
+
+	RtlZeroMemory(buffer, 4096);
 
 	hSession = WinHttpOpen(L"sample", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
 	if (hSession == NULL)
@@ -96,7 +38,8 @@ bool CRequest::GET()
 	urlComponents.lpszUrlPath = szUrlPath;
 	urlComponents.dwUrlPathLength = sizeof(szUrlPath) / sizeof(WCHAR);
 
-	if (!WinHttpCrackUrl(szUrl, lstrlenW(szUrl), 0, &urlComponents)) {
+	const TCHAR* wcsUrl = m_url;
+	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &urlComponents)) {
 		WinHttpCloseHandle(hSession);
 		return -2;
 	}
@@ -107,11 +50,24 @@ bool CRequest::GET()
 		return -3;
 	}
 
-	hRequest = WinHttpOpenRequest(hConnect, L"GET", szUrlPath, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+	const TCHAR* wcsMethod = StrRequestMethodW();
+	hRequest = WinHttpOpenRequest(hConnect, wcsMethod, szUrlPath, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
 	if (hRequest == NULL) {
 		WinHttpCloseHandle(hConnect);
 		WinHttpCloseHandle(hSession);
 		return -4;
+	}
+
+	for (auto& header : m_headers)
+	{
+		const TCHAR* key = header.first;
+		const TCHAR* value = header.second;
+
+		TCHAR szHeader[2048] = { 0, };
+		swprintf_s(szHeader, 2048, L"%s: %s", szHeader);
+
+		WinHttpAddRequestHeaders(hRequest, szHeader, -1L, WINHTTP_ADDREQ_FLAG_ADD);
+
 	}
 
 	if (!WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) {
@@ -142,5 +98,54 @@ bool CRequest::GET()
 	WinHttpCloseHandle(hSession);
 
 	return 0;
+
+
+}
+
+void CRequest::SetMethod(const RequestMethod method)
+{
+	m_method = method;
+}
+
+void CRequest::SetHeader(const TCHAR* key, const TCHAR* value)
+{
+}
+
+void CRequest::SetHeader(request_header headers)
+{
+	m_headers = headers;
+}
+
+void CRequest::SetURL(const TCHAR* url)
+{
+	m_url = url;
+}
+
+const TCHAR* CRequest::StrRequestMethodW()
+{
+	const WCHAR* wcsGet		= L"GET";
+	const WCHAR* wcsPost	= L"POST";
+	const WCHAR* wcsDelete	= L"DELETE";
+	const WCHAR* wcsPut		= L"PUT";
+	const WCHAR* wcsPatch	= L"wcsPatch";
+
+	const WCHAR* strMethod;
+
+	switch (m_method)
+	{
+	case RequestMethod::kGET:		strMethod = wcsGet;		break;
+	case RequestMethod::kPOST:		strMethod = wcsPost;	break;
+	case RequestMethod::kDELETE:	strMethod = wcsDelete;	break;
+	case RequestMethod::kPUT:		strMethod = wcsPut;		break;
+	case RequestMethod::kPATCH:		strMethod = wcsPatch;	break;
+		
+	default:
+		strMethod = L"Error";
+		OutputDebugString(L"Error: Request Method check !");
+		break;
+	}
+
+	return strMethod;
+
 }
 // ======================================================================= //
