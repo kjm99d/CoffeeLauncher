@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeMgr", "LauncherEXE\Co
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeLogin", "LauncherEXE\CoffeeLogin\CoffeeLogin.vcxproj", "{9D6814A7-36B5-49B0-94CC-EB2FBEA55359}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeProcMon", "LauncherEXE\CoffeeProcMon\CoffeeProcMon.vcxproj", "{5B174189-ED83-430C-9E5E-6AD81A90CCDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -65,6 +67,14 @@ Global
 		{9D6814A7-36B5-49B0-94CC-EB2FBEA55359}.Release|x64.Build.0 = Release|x64
 		{9D6814A7-36B5-49B0-94CC-EB2FBEA55359}.Release|x86.ActiveCfg = Release|Win32
 		{9D6814A7-36B5-49B0-94CC-EB2FBEA55359}.Release|x86.Build.0 = Release|Win32
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Debug|x64.ActiveCfg = Debug|x64
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Debug|x64.Build.0 = Debug|x64
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Debug|x86.ActiveCfg = Debug|Win32
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Debug|x86.Build.0 = Debug|Win32
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Release|x64.ActiveCfg = Release|x64
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Release|x64.Build.0 = Release|x64
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Release|x86.ActiveCfg = Release|Win32
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +85,7 @@ Global
 		{73E8B4D8-C18C-43CB-B594-1B3736A5DC15} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
 		{0AC96485-4981-4C05-ACEE-0AAB4F68879B} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
 		{9D6814A7-36B5-49B0-94CC-EB2FBEA55359} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
+		{5B174189-ED83-430C-9E5E-6AD81A90CCDC} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1CA441B-381F-4E22-A19F-F96FC8CCEC90}
