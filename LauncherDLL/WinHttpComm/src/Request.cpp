@@ -1,10 +1,11 @@
 ﻿#include "Request.h"
+#include <atlstr.h>
 
 
 #pragma comment (lib, "winhttp.lib")
 
 // ======================================================================= //
-CRequest::CRequest() : hSession(NULL)
+CRequest::CRequest() : hSession(NULL), m_useragent(L"Mozila")
 {
 	OutputDebugString(L"CRequest Init()");
 }
@@ -17,14 +18,13 @@ CRequest::~CRequest()
 
 int CRequest::Request()
 {
-
+	m_responseBody.clear();
 	HINTERNET      hConnect, hRequest;
 	URL_COMPONENTS urlComponents;
 	WCHAR          szHostName[256], szUrlPath[2048];
 	DWORD          dwSize;
 	DWORD          dwStatusCode;
 	BYTE           buffer[4096];
-
 	RtlZeroMemory(buffer, 4096);
 
 	/*
@@ -32,7 +32,7 @@ int CRequest::Request()
 	* 만약 NULL이 아닌 경우 기존 세션을 유지한채로 Request Logic을 수행한다.
 	*/
 	if (hSession == NULL) {
-		hSession = WinHttpOpen(L"sample", 
+		hSession = WinHttpOpen(m_useragent, 
 			WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, 
 			WINHTTP_NO_PROXY_NAME, 
 			WINHTTP_NO_PROXY_BYPASS, 0);
@@ -46,9 +46,12 @@ int CRequest::Request()
 	urlComponents.dwHostNameLength = sizeof(szHostName) / sizeof(WCHAR);
 	urlComponents.lpszUrlPath = szUrlPath;
 	urlComponents.dwUrlPathLength = sizeof(szUrlPath) / sizeof(WCHAR);
+
+	TCHAR tmp[4096] = { 0, };
+	ReplaceQueryString(tmp, 4096);
 	
 
-	const TCHAR* wcsUrl = m_url;
+	const TCHAR* wcsUrl = tmp;
 	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &urlComponents)) {
 		WinHttpCloseHandle(hSession);
 		return -2;
@@ -86,6 +89,7 @@ int CRequest::Request()
 		WinHttpAddRequestHeaders(hRequest, szHeader, -1L, WINHTTP_ADDREQ_FLAG_ADD);
 
 	}
+	
 
 	if (!WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) {
 		DWORD dwError = GetLastError();
@@ -99,11 +103,20 @@ int CRequest::Request()
 
 	dwSize = sizeof(DWORD);
 	WinHttpQueryHeaders(hRequest, WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER, WINHTTP_HEADER_NAME_BY_INDEX, &dwStatusCode, &dwSize, WINHTTP_NO_HEADER_INDEX);
+	
 	if (dwStatusCode == HTTP_STATUS_OK)
 	{
-		WinHttpReadData(hRequest, buffer, sizeof(buffer), NULL);
+		
+		DWORD dwReadDataSize;
 
-		std::cout << "성공 Body" << buffer << std::endl;
+		do {
+
+			WinHttpReadData(hRequest, buffer, sizeof(buffer), &dwReadDataSize);
+			void* m_ptr = buffer;
+			m_responseBody.append((const char *const)m_ptr, 4096);
+			memset(buffer, 0x00, 4096);
+
+		} while (dwReadDataSize >= 4096);
 	}
 	else {
 		TCHAR szBuf[256];
@@ -135,6 +148,11 @@ void CRequest::SetHeader(request_header headers)
 	m_headers = headers;
 }
 
+void CRequest::SetUserAgent(const TCHAR* value)
+{
+	m_useragent = value;
+}
+
 void CRequest::SetPayload(const TCHAR* payload)
 {
 }
@@ -146,6 +164,12 @@ void CRequest::SetURL(const TCHAR* url)
 
 void CRequest::SetQueryString(const TCHAR* query)
 {
+	m_query = query;
+}
+
+std::string CRequest::GetResponseBody()
+{
+	return m_responseBody;
 }
 
 const TCHAR* CRequest::StrRequestMethodW()
@@ -173,6 +197,35 @@ const TCHAR* CRequest::StrRequestMethodW()
 	}
 
 	return strMethod;
+
+}
+void CRequest::ReplaceQueryString(const TCHAR* buffer, size_t buffer_size)
+{
+	// 기존 문자열보다 무조건 길어질 수밖에 없음.
+	const TCHAR* wcsCompQuery = L"%s?%s";
+	const TCHAR* wcsNullQuery = L"%s";
+	const TCHAR* fmt;
+	if (m_query == NULL)
+	{
+		fmt = wcsNullQuery;
+	}
+	else {
+		fmt = wcsCompQuery;
+	}
+
+	swprintf_s((wchar_t* const)buffer, buffer_size, fmt, m_url, m_query);
+
+#if 0
+	const int nLenQuery = wcslen(buffer);
+	
+
+	// SetQueryString 함수가 호출된 경우
+	if (m_query)
+	{
+		const int nLenQuery = wcslen(buffer);
+	}
+
+#endif
 
 }
 // ======================================================================= //
