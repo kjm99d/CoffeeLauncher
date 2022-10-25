@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifdef WINHTTPCOMM_EXPORTS
 #define WINHTTPCOMM_EXPORT __declspec(dllexport)
@@ -16,7 +16,7 @@
 #include <winhttp.h>
 
 /**
- * Single Vector ÇüÅÂ·Î Key¿Í Value¸¦ ÀúÀåÇÏ´Â ¸®½ºÆ®
+ * Single Vector í˜•íƒœë¡œ Keyì™€ Valueë¥¼ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
  */
 typedef std::vector<std::pair<const TCHAR*, const TCHAR*>> request_header;
 
@@ -40,47 +40,72 @@ public:
 	// 
 
 	/**
-	 * Set[...] ±â¹İÀÇ ÇÔ¼ö·Î ¼³Á¤µÈ ´Ù¾çÇÑ ÆÄ¶ó¹ÌÅÍ ¿É¼ÇÀ» ±â¹İÀ¸·Î À¥¼­¹ö¿¡ µ¥ÀÌÅÍ¸¦ ¿äÃ»ÇÕ´Ï´Ù.
+	 * Set[...] ê¸°ë°˜ì˜ í•¨ìˆ˜ë¡œ ì„¤ì •ëœ ë‹¤ì–‘í•œ íŒŒë¼ë¯¸í„° ì˜µì…˜ì„ ê¸°ë°˜ìœ¼ë¡œ ì›¹ì„œë²„ì— ë°ì´í„°ë¥¼ ìš”ì²­í•©ë‹ˆë‹¤.
 	 * 
-	 * \return ¿¡·¯ÄÚµå
+	 * \return ì—ëŸ¬ì½”ë“œ
 	 */
 	int Request();
 
 	
 	/**
-	 * ¿äÃ»ÇÒ URLÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	 * ìš”ì²­í•  URLì„ ì„¤ì •í•©ë‹ˆë‹¤.
 	 * 
-	 * \param url - ¿äÃ» URLÀ» ÀÔ·ÂÇÕ´Ï´Ù.
+	 * \param url - ìš”ì²­ URLì„ ì…ë ¥í•©ë‹ˆë‹¤.
 	 */
 	void SetURL(const TCHAR* url);
 
 	/**
-	 * ¿äÃ» ¸Ş¼Òµå¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+	 * ìš”ì²­ ë©”ì†Œë“œë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 	 * 
-	 * \param method - RequestMethod Enum ÂüÁ¶
+	 * \param method - RequestMethod Enum ì°¸ì¡°
 	 */
 	void SetMethod(const RequestMethod method);
 
 	/**
-	 * ¿äÃ»Çì´õ¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-	 * ÇÑ¹ø Àû¿ë ½Ã ±âÁ¸°ªÀº »ç¶óÁı´Ï´Ù.
+	 *  ìš”ì²­í—¤ë”ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤. 
+	 *  í•œë²ˆ ì ìš© ì‹œ ê¸°ì¡´ê°’ì€ ì‚¬ë¼ì§‘ë‹ˆë‹¤.
 	 * 
-	 * \param key - Çì´õÀÇ Å°°ª
-	 * \param value - Çì´õÀÇ ¹ë·ù°ª
+	 * \param key - í—¤ë”ì˜ í‚¤ê°’
+	 * \param value - í—¤ë”ì˜ ë°¸ë¥˜ê°’
 	 */
 	void SetHeader(const TCHAR* key, const TCHAR* value);
 
 	/**
-	 * std::pair Å¸ÀÔÀ¸·ÎµÈ ¹è¿­À» ÀÔ·ÂÀ¸·Î ¹Ş¾Æ Çì´õ¸¦ ±¸¼ºÇÕ´Ï´Ù.
+	 * std::pair íƒ€ì…ìœ¼ë¡œëœ ë°°ì—´ì„ ì…ë ¥ìœ¼ë¡œ ë°›ì•„ í—¤ë”ë¥¼ êµ¬ì„±í•©ë‹ˆë‹¤.
 	 * 
-	 * \param headers header key¿Í value·Î ±¸¼ºµÈ ¹è¿­
+	 * \param headers header keyì™€ valueë¡œ êµ¬ì„±ëœ ë°°ì—´
 	 */
 	void SetHeader(request_header headers);
+
+	/**
+	 * ìš”ì²­ íŒŒë¼ë¯¸í„°ì— ë“¤ì–´ê°ˆ í˜ì´ë¡œë“œë¥¼ ì„¤ì •í•œë‹¤
+	 * ë§Œì•½ GET ë°©ì‹ì˜ ìš”ì²­ì¸ ê²½ìš° í˜ì´ë¡œë“œë¥¼ ì„¤ì •í•˜ì§€ ì•ŠëŠ”ë‹¤.
+	 */
+
+	/**
+	 * ìš”ì²­ íŒŒë¼ë¯¸í„°ì— ë“¤ì–´ê°ˆ í˜ì´ë¡œë“œë¥¼ ì„¤ì •í•œë‹¤.
+	 * ë§Œì•½ GET ë°©ì‹ì˜ ìš”ì²­ì¸ ê²½ìš° í˜ì´ë¡œë“œë¥¼ ì„¤ì •í•˜ì§€ ì•ŠëŠ”ë‹¤.
+	 * 
+	 * \param payload - í˜ì´ë¡œë“œ
+	 */
+	void SetPayload(const TCHAR* payload);
+
+	
+	/**
+	 * ìš”ì²­ì— í•„ìš”í•œ QueryStringì„ ì§€ì •í•œë‹¤
+	 * í•´ë‹¹ ë©”ì†Œë“œì—ì„œ ì²˜ë¦¬ë˜ëŠ” ë¬¸ìì—´ í¬ë§·
+	 * Example : "?a=ab&b=ac"
+	 * ìœ„ì™€ ê°™ì´ ì²˜ë¦¬í•œë‹¤.
+	 * 
+	 * 
+	 * \param query - ì„¤ëª…ì— Example ì°¸ê³ 
+	 */
+	void SetQueryString(const TCHAR* query);
 
 
 private:
 	/**
-	 * ÇöÀç ¼³Á¤µÈ ¿äÃ» ¸Ş¼Òµå¸¦ ±â¹İÀ¸·Î ¹®ÀÚ¿­È­µÈ ¿äÃ» ¸Ş¼Òµå¸¦ Àü´ŞÇÕ´Ï´Ù.
+	 * í˜„ì¬ ì„¤ì •ëœ ìš”ì²­ ë©”ì†Œë“œë¥¼ ê¸°ë°˜ìœ¼ë¡œ ë¬¸ìì—´í™”ëœ ìš”ì²­ ë©”ì†Œë“œë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.
 	 * 
 	 * \return 
 	 */
@@ -88,9 +113,9 @@ private:
 
 private:
 	request_header m_headers;
-	RequestMethod m_method;	// ¿äÃ» ¸Ş¼Òµå Å¸ÀÔ
-	const TCHAR* m_url;		// ¿äÃ» URL
-	HINTERNET hSession;		// ¿äÃ» ¼¼¼Ç
+	RequestMethod m_method;	// ìš”ì²­ ë©”ì†Œë“œ íƒ€ì…
+	const TCHAR* m_url;		// ìš”ì²­ URL
+	HINTERNET hSession;		// ìš”ì²­ ì„¸ì…˜
 
 	
 

@@ -1,4 +1,4 @@
-#include "Request.h"
+﻿#include "Request.h"
 
 
 #pragma comment (lib, "winhttp.lib")
@@ -27,9 +27,18 @@ int CRequest::Request()
 
 	RtlZeroMemory(buffer, 4096);
 
-	hSession = WinHttpOpen(L"sample", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
-	if (hSession == NULL)
-		return -1;
+	/*
+	* 현재 hSession 값이 NULL일 경우에만, 새로운 세션을 생성 시키고,
+	* 만약 NULL이 아닌 경우 기존 세션을 유지한채로 Request Logic을 수행한다.
+	*/
+	if (hSession == NULL) {
+		hSession = WinHttpOpen(L"sample", 
+			WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, 
+			WINHTTP_NO_PROXY_NAME, 
+			WINHTTP_NO_PROXY_BYPASS, 0);
+		if (hSession == NULL)
+			return -1;
+	}
 
 	ZeroMemory(&urlComponents, sizeof(URL_COMPONENTS));
 	urlComponents.dwStructSize = sizeof(URL_COMPONENTS);
@@ -37,6 +46,7 @@ int CRequest::Request()
 	urlComponents.dwHostNameLength = sizeof(szHostName) / sizeof(WCHAR);
 	urlComponents.lpszUrlPath = szUrlPath;
 	urlComponents.dwUrlPathLength = sizeof(szUrlPath) / sizeof(WCHAR);
+	
 
 	const TCHAR* wcsUrl = m_url;
 	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &urlComponents)) {
@@ -44,33 +54,41 @@ int CRequest::Request()
 		return -2;
 	}
 
-	hConnect = WinHttpConnect(hSession, szHostName, INTERNET_DEFAULT_PORT, 0);
+	const INTERNET_PORT nPort = urlComponents.nPort; /* WORD */
+	hConnect = WinHttpConnect(hSession, szHostName, nPort, 0);
 	if (hConnect == NULL) {
 		WinHttpCloseHandle(hSession);
 		return -3;
 	}
 
 	const TCHAR* wcsMethod = StrRequestMethodW();
-	hRequest = WinHttpOpenRequest(hConnect, wcsMethod, szUrlPath, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+	hRequest = WinHttpOpenRequest(
+		hConnect, wcsMethod, szUrlPath, 
+		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
 	if (hRequest == NULL) {
 		WinHttpCloseHandle(hConnect);
 		WinHttpCloseHandle(hSession);
 		return -4;
 	}
 
+	/*
+	* Header Iterator 
+	* 헤더를 순회하면서, 헤더값을 추가해 서버에 요청한다.
+	*/
 	for (auto& header : m_headers)
 	{
 		const TCHAR* key = header.first;
 		const TCHAR* value = header.second;
 
 		TCHAR szHeader[2048] = { 0, };
-		swprintf_s(szHeader, 2048, L"%s: %s", szHeader);
+		swprintf_s(szHeader, 2048, L"%s: %s", key, value);
 
 		WinHttpAddRequestHeaders(hRequest, szHeader, -1L, WINHTTP_ADDREQ_FLAG_ADD);
 
 	}
 
 	if (!WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) {
+		DWORD dwError = GetLastError();
 		WinHttpCloseHandle(hRequest);
 		WinHttpCloseHandle(hConnect);
 		WinHttpCloseHandle(hSession);
@@ -85,12 +103,12 @@ int CRequest::Request()
 	{
 		WinHttpReadData(hRequest, buffer, sizeof(buffer), NULL);
 
-		std::cout << "���� Body" << buffer << std::endl;
+		std::cout << "성공 Body" << buffer << std::endl;
 	}
 	else {
 		TCHAR szBuf[256];
 		wsprintf(szBuf, TEXT("Status Code %d"), dwStatusCode);
-		std::wcout << "����" << szBuf << std::endl;
+		std::wcout << "실패" << szBuf << std::endl;
 	}
 
 	WinHttpCloseHandle(hRequest);
@@ -109,6 +127,7 @@ void CRequest::SetMethod(const RequestMethod method)
 
 void CRequest::SetHeader(const TCHAR* key, const TCHAR* value)
 {
+	m_headers.push_back({ key, value });
 }
 
 void CRequest::SetHeader(request_header headers)
@@ -116,9 +135,17 @@ void CRequest::SetHeader(request_header headers)
 	m_headers = headers;
 }
 
+void CRequest::SetPayload(const TCHAR* payload)
+{
+}
+
 void CRequest::SetURL(const TCHAR* url)
 {
 	m_url = url;
+}
+
+void CRequest::SetQueryString(const TCHAR* query)
+{
 }
 
 const TCHAR* CRequest::StrRequestMethodW()
