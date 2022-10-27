@@ -25,7 +25,8 @@ private:
 	void UpdateCheck();
 
 protected:
-	afx_msg	LRESULT TrayIconMessage(WPARAM wParam, LPARAM lParam);
+	afx_msg	LRESULT TrayIconMessage(WPARAM wParam, LPARAM lParam); 
+	afx_msg	void TrayIconMenuClickMessage(UINT nId);
 
 
 // 구현입니다.

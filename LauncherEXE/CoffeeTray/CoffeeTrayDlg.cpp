@@ -72,6 +72,10 @@ BEGIN_MESSAGE_MAP(CCoffeeTrayDlg, CDialogEx)
 	ON_MESSAGE(WM_TRAYICON_MSG, TrayIconMessage)
 
 	ON_COMMAND(ID_MENU_UPDATE_CHECK, UpdateCheck)
+	//ON_COMMAND(201, UpdateCheck)
+
+	ON_COMMAND_RANGE(WM_USER + 3, WM_USER + 20, TrayIconMenuClickMessage)
+
 END_MESSAGE_MAP()
 
 
@@ -195,6 +199,11 @@ LRESULT CCoffeeTrayDlg::TrayIconMessage(WPARAM wParam, LPARAM lParam)
 
 	switch (lParam)
 	{
+	case WM_LBUTTONDOWN:
+	{
+		OutputDebugString(L"User Left Button Down \n");
+		break;
+	}
 	case WM_RBUTTONDOWN:
 	{
 		CMenu menu, * pSubMenu;
@@ -203,6 +212,12 @@ LRESULT CCoffeeTrayDlg::TrayIconMessage(WPARAM wParam, LPARAM lParam)
 			return 0;
 		if (!(pSubMenu = menu.GetSubMenu(0)))
 			return 0;
+
+		BOOL status = 0;
+		status = pSubMenu->AppendMenuW(MF_STRING, WM_USER + 3, L"AA");
+		
+
+
 
 		CPoint pos;
 		GetCursorPos(&pos);
@@ -214,8 +229,25 @@ LRESULT CCoffeeTrayDlg::TrayIconMessage(WPARAM wParam, LPARAM lParam)
 
 		break;
 	}
+
+	
+
 	}
 
 
 	return LRESULT();
+}
+
+void CCoffeeTrayDlg::TrayIconMenuClickMessage(UINT nId)
+{
+	switch (nId)
+	{
+	case (WM_USER + 3):
+		MessageBox(L"aaa!!!Aa!");
+		break;
+	
+	}
+
+
+	
 }
