@@ -159,7 +159,9 @@ void CRequest::SetPayload(const TCHAR* payload)
 
 void CRequest::SetURL(const TCHAR* url)
 {
-	m_url = url;
+	RtlZeroMemory(m_url, sizeof(m_url));
+	swprintf_s(m_url, 4096, L"%s", url);
+	OutputDebugString(m_url);
 }
 
 void CRequest::SetQueryString(const TCHAR* query)

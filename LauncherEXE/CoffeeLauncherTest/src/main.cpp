@@ -3,6 +3,11 @@
 #pragma comment(lib, "WinHttpComm.lib")
 
 
+#include <CoffeeFileDownloader/include/DownloaderURL.h>
+#pragma comment(lib, "CoffeeFileDownloader.lib")
+
+
+
 #include <windows.h>
 #include <iostream>
 
@@ -21,17 +26,8 @@ void MyCreateProcess()
 
 int main()
 {
-//	POST();
-	
-	
-	MyCreateProcess();
-	OutputDebugString(L"aa");
-	std::cout << "sadkjnsadksadsadasdkjn" << std::endl;
+	CURLDownload * downloader = new CURLDownload("http://192.168.0.4:8085/windbg.exe");
+	downloader->DownloadMemory();
+	downloader->Write("D:\\test.exe");
 
-	while (true)
-	{
-
-	}
-
-	return 0;
 }
