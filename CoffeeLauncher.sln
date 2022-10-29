@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LauncherDLL", "LauncherDLL", "{D2FCD713-796B-4B9D-A526-84ABBF51C737}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeLauncherTest", "LauncherEXE\CoffeeLauncherTest\CoffeeLauncherTest.vcxproj", "{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{91633857-71CB-4678-B150-10CD5FEF8A70} = {91633857-71CB-4678-B150-10CD5FEF8A70}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeTray", "LauncherEXE\CoffeeTray\CoffeeTray.vcxproj", "{73E8B4D8-C18C-43CB-B594-1B3736A5DC15}"
 EndProject
@@ -22,6 +25,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinHttpComm", "LauncherLIB\WinHttpComm\WinHttpComm.vcxproj", "{4E25308E-7F93-4295-9AA7-3E62B44C4974}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeLicense", "LauncherDLL\CoffeeLicense\CoffeeLicense.vcxproj", "{193A2D28-C460-4CAD-BCAA-056FAF55405C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeFileDownloader", "LauncherDLL\CoffeeFileDownloader\CoffeeFileDownloader.vcxproj", "{91633857-71CB-4678-B150-10CD5FEF8A70}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E25308E-7F93-4295-9AA7-3E62B44C4974} = {4E25308E-7F93-4295-9AA7-3E62B44C4974}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +95,14 @@ Global
 		{193A2D28-C460-4CAD-BCAA-056FAF55405C}.Release|x64.Build.0 = Release|x64
 		{193A2D28-C460-4CAD-BCAA-056FAF55405C}.Release|x86.ActiveCfg = Release|Win32
 		{193A2D28-C460-4CAD-BCAA-056FAF55405C}.Release|x86.Build.0 = Release|Win32
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Debug|x64.ActiveCfg = Debug|x64
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Debug|x64.Build.0 = Debug|x64
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Debug|x86.ActiveCfg = Debug|Win32
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Debug|x86.Build.0 = Debug|Win32
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Release|x64.ActiveCfg = Release|x64
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Release|x64.Build.0 = Release|x64
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Release|x86.ActiveCfg = Release|Win32
+		{91633857-71CB-4678-B150-10CD5FEF8A70}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +115,7 @@ Global
 		{5B174189-ED83-430C-9E5E-6AD81A90CCDC} = {EFA023DE-304C-4964-B1E0-8C35FB50A29B}
 		{4E25308E-7F93-4295-9AA7-3E62B44C4974} = {67382102-333B-470B-AAEB-C84E04F38385}
 		{193A2D28-C460-4CAD-BCAA-056FAF55405C} = {D2FCD713-796B-4B9D-A526-84ABBF51C737}
+		{91633857-71CB-4678-B150-10CD5FEF8A70} = {D2FCD713-796B-4B9D-A526-84ABBF51C737}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1CA441B-381F-4E22-A19F-F96FC8CCEC90}

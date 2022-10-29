@@ -131,7 +131,7 @@ private:
 private:
 	request_header m_headers;
 	RequestMethod m_method;		// 요청 메소드 타입
-	const TCHAR* m_url;			// 요청 URL
+	TCHAR m_url[4096];			// 요청 URL
 	const TCHAR* m_query;		// QueryString
 	const TCHAR* m_useragent;	// useragent
 	HINTERNET hSession;			// 요청 세션
