@@ -23,10 +23,6 @@ int main()
 {
 //	POST();
 	
-
-	CRequest& request = CRequest::GetInst();
-	request.SetMethod(kGET);
-	request.Request();
 	
 	MyCreateProcess();
 	OutputDebugString(L"aa");
