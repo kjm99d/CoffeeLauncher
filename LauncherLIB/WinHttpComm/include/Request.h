@@ -33,7 +33,10 @@ class WINHTTPCOMM_EXPORT CRequest
 {
 
 public:
-	CRequest();
+	CRequest() = delete;
+	CRequest(const CRequest&) = delete;
+
+	CRequest(const wchar_t *url);
 	~CRequest();
 
 public:
@@ -92,24 +95,8 @@ public:
 	 */
 	void SetPayload(const wchar_t* payload);
 
-	
-	/**
-	 * \brief 요청에 필요한 QueryString을 지정한다.
-	 * \brief 해당 메소드에서 처리되는 문자열 포맷
-	 * \brief Example : "?a=ab&b=ac"
-	 * \brief 위와 같이 처리한다.
-	 * 
-	 * 
-	 * \param query - 설명에 Example 참고
-	 */
-	void SetQueryString(const wchar_t* query);
 
-	/**
-	 * \brief Request() 호출 이후에, 서버로 부터 받은 ResponseBody 내용을 가져오는 함수.
-	 * 
-	 * \return 
-	 */
-	std::string GetResponseBody();
+	BOOL GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize);
 
 
 protected:
@@ -120,12 +107,6 @@ protected:
 	 */
 	const wchar_t* StrRequestMethodW();
 	
-	/**
-	 * SetURL로 인해 지정된 파라미터가 있을 경우, 처리한다.
-	 * 
-	 * \return 
-	 */
-	void ReplaceQueryString(const wchar_t* buffer, size_t buffer_size);
 
 protected:
 	request_header m_headers;
@@ -135,6 +116,24 @@ protected:
 	const wchar_t* m_useragent;	// useragent
 	HINTERNET hSession;			// 요청 세션
 
-	std::string m_responseBody;
+	
+	//std::string m_responseBody;
+
+
+private:
+	void Open();
+	void SetComponent();
+
+
+	void Close();
+
+
+private:
+	BYTE           m_ResponseBuffer[4096];
+	URL_COMPONENTS m_urlComponents;
+	WCHAR          m_szHostName[256], m_szUrlPath[2048];
+	HINTERNET      m_hConnect, m_hRequest;
+	DWORD m_dwStatusCode;
+
 
 };

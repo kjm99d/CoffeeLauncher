@@ -1,6 +1,6 @@
 #include "RequestFile.h"
 
-CRequestFile::CRequestFile(FILE* fd)
+CRequestFile::CRequestFile(FILE* fd) : CRequest(L"aa")
 {
 	m_fd = fd;
 }
@@ -39,11 +39,8 @@ int CRequestFile::Write()
 	urlComponents.lpszUrlPath = szUrlPath;
 	urlComponents.dwUrlPathLength = sizeof(szUrlPath) / sizeof(WCHAR);
 
-	wchar_t tmp[4096] = { 0, };
-	ReplaceQueryString(tmp, 4096);
 
-
-	const wchar_t* wcsUrl = tmp;
+	const wchar_t* wcsUrl = NULL;// = tmp;
 	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &urlComponents)) {
 		WinHttpCloseHandle(hSession);
 		return -2;

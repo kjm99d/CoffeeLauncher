@@ -26,8 +26,29 @@ void MyCreateProcess()
 
 int main()
 {
+	/*
 	CURLDownload * downloader = new CURLDownload("http://192.168.0.4:8085/windbg.exe");
 	downloader->DownloadMemory();
 	downloader->Write("D:\\test.exe");
+	*/
+
+	CRequest client(L"http://127.0.0.1:5000/test");
+	client.SetMethod(RequestMethod::kGET);
+	client.Request();
+	
+	PBYTE responseBuffer = NULL;
+	DWORD dwReadDataSize = 0;
+
+	while (client.GetBuffer(responseBuffer, dwReadDataSize))
+	{
+		std::string tmp;
+		//tmp.append(PBYTE(), (size_t)0);
+		tmp.append(
+			(const char *)responseBuffer, 
+			static_cast<size_t>(dwReadDataSize)
+		);
+		std::cout << tmp << std::endl;
+	}
+
 
 }
