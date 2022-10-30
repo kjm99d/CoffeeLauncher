@@ -47,11 +47,11 @@ int CRequest::Request()
 	urlComponents.lpszUrlPath = szUrlPath;
 	urlComponents.dwUrlPathLength = sizeof(szUrlPath) / sizeof(WCHAR);
 
-	TCHAR tmp[4096] = { 0, };
+	wchar_t tmp[4096] = { 0, };
 	ReplaceQueryString(tmp, 4096);
 	
 
-	const TCHAR* wcsUrl = tmp;
+	const wchar_t* wcsUrl = tmp;
 	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &urlComponents)) {
 		WinHttpCloseHandle(hSession);
 		return -2;
@@ -64,7 +64,7 @@ int CRequest::Request()
 		return -3;
 	}
 
-	const TCHAR* wcsMethod = StrRequestMethodW();
+	const wchar_t* wcsMethod = StrRequestMethodW();
 	hRequest = WinHttpOpenRequest(
 		hConnect, wcsMethod, szUrlPath, 
 		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
@@ -80,10 +80,10 @@ int CRequest::Request()
 	*/
 	for (auto& header : m_headers)
 	{
-		const TCHAR* key = header.first;
-		const TCHAR* value = header.second;
+		const wchar_t* key = header.first;
+		const wchar_t* value = header.second;
 
-		TCHAR szHeader[2048] = { 0, };
+		wchar_t szHeader[2048] = { 0, };
 		swprintf_s(szHeader, 2048, L"%s: %s", key, value);
 
 		WinHttpAddRequestHeaders(hRequest, szHeader, -1L, WINHTTP_ADDREQ_FLAG_ADD);
@@ -119,7 +119,7 @@ int CRequest::Request()
 		} while (dwReadDataSize >= 4096);
 	}
 	else {
-		TCHAR szBuf[256];
+		wchar_t szBuf[256];
 		wsprintf(szBuf, TEXT("Status Code %d"), dwStatusCode);
 		std::wcout << "실패" << szBuf << std::endl;
 	}
@@ -138,7 +138,7 @@ void CRequest::SetMethod(const RequestMethod method)
 	m_method = method;
 }
 
-void CRequest::SetHeader(const TCHAR* key, const TCHAR* value)
+void CRequest::SetHeader(const wchar_t* key, const wchar_t* value)
 {
 	m_headers.push_back({ key, value });
 }
@@ -148,23 +148,23 @@ void CRequest::SetHeader(request_header headers)
 	m_headers = headers;
 }
 
-void CRequest::SetUserAgent(const TCHAR* value)
+void CRequest::SetUserAgent(const wchar_t* value)
 {
 	m_useragent = value;
 }
 
-void CRequest::SetPayload(const TCHAR* payload)
+void CRequest::SetPayload(const wchar_t* payload)
 {
 }
 
-void CRequest::SetURL(const TCHAR* url)
+void CRequest::SetURL(const wchar_t* url)
 {
 	RtlZeroMemory(m_url, sizeof(m_url));
 	swprintf_s(m_url, 4096, L"%s", url);
 	OutputDebugString(m_url);
 }
 
-void CRequest::SetQueryString(const TCHAR* query)
+void CRequest::SetQueryString(const wchar_t* query)
 {
 	m_query = query;
 }
@@ -174,7 +174,7 @@ std::string CRequest::GetResponseBody()
 	return m_responseBody;
 }
 
-const TCHAR* CRequest::StrRequestMethodW()
+const wchar_t* CRequest::StrRequestMethodW()
 {
 	const WCHAR* wcsGet		= L"GET";
 	const WCHAR* wcsPost	= L"POST";
@@ -201,12 +201,12 @@ const TCHAR* CRequest::StrRequestMethodW()
 	return strMethod;
 
 }
-void CRequest::ReplaceQueryString(const TCHAR* buffer, size_t buffer_size)
+void CRequest::ReplaceQueryString(const wchar_t* buffer, size_t buffer_size)
 {
 	// 기존 문자열보다 무조건 길어질 수밖에 없음.
-	const TCHAR* wcsCompQuery = L"%s?%s";
-	const TCHAR* wcsNullQuery = L"%s";
-	const TCHAR* fmt;
+	const wchar_t* wcsCompQuery = L"%s?%s";
+	const wchar_t* wcsNullQuery = L"%s";
+	const wchar_t* fmt;
 	if (m_query == NULL)
 	{
 		fmt = wcsNullQuery;

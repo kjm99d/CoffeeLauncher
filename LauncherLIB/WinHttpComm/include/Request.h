@@ -6,7 +6,6 @@
 #define WINHTTPCOMM_EXPORT __declspec(dllexport)
 #endif
 
-#include <tchar.h>
 #include <vector>
 #include <map>
 #include <utility>
@@ -19,7 +18,7 @@
 /**
  * Single Vector 형태로 Key와 Value를 저장하는 리스트
  */
-typedef std::vector<std::pair<const TCHAR*, const TCHAR*>> request_header;
+typedef std::vector<std::pair<const wchar_t*, const wchar_t*>> request_header;
 
 typedef enum {
 	None,
@@ -53,7 +52,7 @@ public:
 	 * 
 	 * \param url - 요청 URL을 입력합니다.
 	 */
-	void SetURL(const TCHAR* url);
+	void SetURL(const wchar_t* url);
 
 	/**
 	 * \brief 요청 메소드를 설정합니다.
@@ -68,7 +67,7 @@ public:
 	 * \param key - 헤더의 키값
 	 * \param value - 헤더의 밸류값
 	 */
-	void SetHeader(const TCHAR* key, const TCHAR* value);
+	void SetHeader(const wchar_t* key, const wchar_t* value);
 
 	/**
 	 * \brief std::pair 타입으로된 배열을 입력으로 받아 헤더를 구성합니다.
@@ -82,7 +81,7 @@ public:
 	 * 
 	 * \param value - 설정될 UserAgent
 	 */
-	void SetUserAgent(const TCHAR* value);
+	void SetUserAgent(const wchar_t* value);
 
 
 	/**
@@ -91,7 +90,7 @@ public:
 	 * 
 	 * \param payload - 페이로드
 	 */
-	void SetPayload(const TCHAR* payload);
+	void SetPayload(const wchar_t* payload);
 
 	
 	/**
@@ -103,7 +102,7 @@ public:
 	 * 
 	 * \param query - 설명에 Example 참고
 	 */
-	void SetQueryString(const TCHAR* query);
+	void SetQueryString(const wchar_t* query);
 
 	/**
 	 * \brief Request() 호출 이후에, 서버로 부터 받은 ResponseBody 내용을 가져오는 함수.
@@ -119,21 +118,21 @@ private:
 	 * 
 	 * \return 
 	 */
-	const TCHAR* StrRequestMethodW();
+	const wchar_t* StrRequestMethodW();
 	
 	/**
 	 * SetURL로 인해 지정된 파라미터가 있을 경우, 처리한다.
 	 * 
 	 * \return 
 	 */
-	void ReplaceQueryString(const TCHAR* buffer, size_t buffer_size);
+	void ReplaceQueryString(const wchar_t* buffer, size_t buffer_size);
 
 private:
 	request_header m_headers;
 	RequestMethod m_method;		// 요청 메소드 타입
-	TCHAR m_url[4096];			// 요청 URL
-	const TCHAR* m_query;		// QueryString
-	const TCHAR* m_useragent;	// useragent
+	wchar_t m_url[4096];			// 요청 URL
+	const wchar_t* m_query;		// QueryString
+	const wchar_t* m_useragent;	// useragent
 	HINTERNET hSession;			// 요청 세션
 
 	std::string m_responseBody;
