@@ -32,9 +32,15 @@ int main()
 	downloader->Write("D:\\test.exe");
 	*/
 
-	CRequest client(L"http://127.0.0.1:5000/test");
+	CRequest client(L"http://192.168.0.4:8085/windbg.exe");
 	client.SetMethod(RequestMethod::kGET);
+	request_header hdrs = { {L"user-agent", L"Hello"} };
+	client.SetHeader(hdrs);
+
+
 	client.Request();
+
+	DWORD dwStatusCode = client.GetStatusCode();
 	
 	PBYTE responseBuffer = NULL;
 	DWORD dwReadDataSize = 0;

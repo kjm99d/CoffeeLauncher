@@ -24,7 +24,7 @@ int CRequestFile::Write()
 	* 만약 NULL이 아닌 경우 기존 세션을 유지한채로 Request Logic을 수행한다.
 	*/
 	if (hSession == NULL) {
-		hSession = WinHttpOpen(m_useragent,
+		hSession = WinHttpOpen(L"a",
 			WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
 			WINHTTP_NO_PROXY_NAME,
 			WINHTTP_NO_PROXY_BYPASS, 0);

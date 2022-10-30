@@ -10,7 +10,7 @@ CRequest::CRequest(const wchar_t* url)
 	OutputDebugString(L"CRequest Init()");
 
 	hSession = NULL;
-	m_useragent = L"Mozila";
+
 
 	// 멤버 변수 URL을 설정하고
 	SetURL(url);
@@ -43,6 +43,7 @@ CRequest::~CRequest()
 
 int CRequest::Request()
 {
+	
 	//m_responseBody.clear();
 
 	DWORD          dwSize;
@@ -86,7 +87,13 @@ int CRequest::Request()
 	WinHttpReceiveResponse(m_hRequest, NULL);
 
 	dwSize = sizeof(DWORD);
-	WinHttpQueryHeaders(m_hRequest, WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER, WINHTTP_HEADER_NAME_BY_INDEX, &m_dwStatusCode, &dwSize, WINHTTP_NO_HEADER_INDEX);
+	WinHttpQueryHeaders(m_hRequest, 
+		WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER, 
+		WINHTTP_HEADER_NAME_BY_INDEX, 
+		&m_dwStatusCode, 
+		&dwSize, WINHTTP_NO_HEADER_INDEX);
+
+	
 	
 	return 0;
 
@@ -106,11 +113,6 @@ void CRequest::SetHeader(const wchar_t* key, const wchar_t* value)
 void CRequest::SetHeader(request_header headers)
 {
 	m_headers = headers;
-}
-
-void CRequest::SetUserAgent(const wchar_t* value)
-{
-	m_useragent = value;
 }
 
 void CRequest::SetPayload(const wchar_t* payload)
@@ -163,7 +165,7 @@ void CRequest::Open()
 	* 만약 NULL이 아닌 경우 기존 세션을 유지한채로 Request Logic을 수행한다.
 	*/
 	if (hSession == NULL) {
-		hSession = WinHttpOpen(m_useragent,
+		hSession = WinHttpOpen(L"m_useragent",
 			WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
 			WINHTTP_NO_PROXY_NAME,
 			WINHTTP_NO_PROXY_BYPASS, 0);
@@ -180,6 +182,12 @@ void CRequest::SetComponent()
 	m_urlComponents.dwHostNameLength = sizeof(m_szHostName) / sizeof(WCHAR);
 	m_urlComponents.lpszUrlPath = m_szUrlPath;
 	m_urlComponents.dwUrlPathLength = sizeof(m_szUrlPath) / sizeof(WCHAR);
+}
+
+
+DWORD CRequest::GetStatusCode()
+{
+	return m_dwStatusCode;
 }
 
 BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage,DWORD& dwReadDataSize)

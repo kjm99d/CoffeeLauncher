@@ -79,12 +79,6 @@ public:
 	 */
 	void SetHeader(request_header headers);
 
-	/**
-	 * UserAgent 헤더를 설정한다.
-	 * 
-	 * \param value - 설정될 UserAgent
-	 */
-	void SetUserAgent(const wchar_t* value);
 
 
 	/**
@@ -98,6 +92,7 @@ public:
 
 	BOOL GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize);
 
+	DWORD GetStatusCode();
 
 protected:
 	/**
@@ -112,8 +107,6 @@ protected:
 	request_header m_headers;
 	RequestMethod m_method;		// 요청 메소드 타입
 	wchar_t m_url[4096];			// 요청 URL
-	const wchar_t* m_query;		// QueryString
-	const wchar_t* m_useragent;	// useragent
 	HINTERNET hSession;			// 요청 세션
 
 	
