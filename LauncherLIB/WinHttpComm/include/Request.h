@@ -112,7 +112,7 @@ public:
 	std::string GetResponseBody();
 
 
-private:
+protected:
 	/**
 	 * 현재 설정된 요청 메소드를 기반으로 문자열화된 요청 메소드를 전달합니다.
 	 * 
@@ -127,7 +127,7 @@ private:
 	 */
 	void ReplaceQueryString(const wchar_t* buffer, size_t buffer_size);
 
-private:
+protected:
 	request_header m_headers;
 	RequestMethod m_method;		// 요청 메소드 타입
 	wchar_t m_url[4096];			// 요청 URL

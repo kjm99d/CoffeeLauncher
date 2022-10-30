@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Request.h" />
+    <ClInclude Include="include\RequestFile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Request.cpp" />
+    <ClCompile Include="src\RequestFile.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
