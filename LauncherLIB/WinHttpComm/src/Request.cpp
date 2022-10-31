@@ -15,9 +15,9 @@ CRequest::CRequest(const wchar_t* url)
 	// 멤버 변수 URL을 설정하고
 	SetURL(url);
 	// 세션을 할당받고
-	Open();
+	//Open();
 	// 컴포넌트 파싱
-	SetComponent();
+	//SetComponent();
 
 	const wchar_t* wcsUrl = m_url;
 	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &m_urlComponents)) {
@@ -35,10 +35,33 @@ CRequest::CRequest(const wchar_t* url)
 	
 }
 
+CRequest::CRequest(const RequestMethod method, wchar_t* url)
+{
+	
+}
+
 CRequest::~CRequest()
 {
 	OutputDebugString(L"CRequest destroy()");
 	Close();
+}
+
+RequestError CRequest::GetLastError()
+{
+	return RequestError();
+}
+
+void CRequest::Open(RequestMethod method, const wchar_t* url)
+{	
+	// Create Session
+	CreateSession();
+	// SetComponent
+	SetComponent(url);
+}
+
+void CRequest::Send(const wchar_t* form)
+{
+	
 }
 
 int CRequest::Request()
@@ -158,14 +181,14 @@ const wchar_t* CRequest::StrRequestMethodW()
 
 }
 
-void CRequest::Open()
+void CRequest::CreateSession(const wchar_t* session = NULL)
 {
 	/*
 	* 현재 hSession 값이 NULL일 경우에만, 새로운 세션을 생성 시키고,
 	* 만약 NULL이 아닌 경우 기존 세션을 유지한채로 Request Logic을 수행한다.
 	*/
 	if (hSession == NULL) {
-		hSession = WinHttpOpen(L"m_useragent",
+		hSession = WinHttpOpen(session,
 			WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
 			WINHTTP_NO_PROXY_NAME,
 			WINHTTP_NO_PROXY_BYPASS, 0);
@@ -173,7 +196,7 @@ void CRequest::Open()
 
 
 }
-void CRequest::SetComponent()
+void CRequest::SetComponent(const wchar_t * url)
 {
 
 	ZeroMemory(&m_urlComponents, sizeof(URL_COMPONENTS));
@@ -182,6 +205,13 @@ void CRequest::SetComponent()
 	m_urlComponents.dwHostNameLength = sizeof(m_szHostName) / sizeof(WCHAR);
 	m_urlComponents.lpszUrlPath = m_szUrlPath;
 	m_urlComponents.dwUrlPathLength = sizeof(m_szUrlPath) / sizeof(WCHAR);
+
+
+	const wchar_t* wcsUrl = url;
+	if (!WinHttpCrackUrl(wcsUrl, lstrlenW(wcsUrl), 0, &m_urlComponents)) {
+		WinHttpCloseHandle(hSession);
+		//return -2;
+	}
 }
 
 
@@ -235,3 +265,17 @@ void CRequest::Close()
 }
 
 // ======================================================================= //
+
+const char* GetRequestErrorString(RequestError err)
+{
+	const char* ret;
+	switch (err)
+	{
+	//case RequestError::ERROR_NONE: 
+	default:
+		ret = NULL;
+		break;
+	}
+
+	return ret;
+}
