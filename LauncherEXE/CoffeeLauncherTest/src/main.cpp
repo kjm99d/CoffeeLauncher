@@ -24,10 +24,44 @@ void MyCreateProcess()
 		FALSE, 0, NULL, NULL, &si, &pi);
 }
 
+void ExampleWinHttp()
+{
+	CRequest client;
+
+	client.Open(RequestMethod::kGET, L"http://10.81.10.160:5000/test.txt");
+	client.SetHeader(L"user-agent", L"Hello");
+	client.Send();
+
+	//client.Request();
+
+	DWORD dwStatusCode = client.GetStatusCode();
+
+	PBYTE responseBuffer = NULL;
+	DWORD dwReadDataSize = 0;
+
+	while (client.GetBuffer(responseBuffer, dwReadDataSize))
+	{
+		std::string tmp;
+		//tmp.append(PBYTE(), (size_t)0);
+		tmp.append(
+			(const char*)responseBuffer,
+			static_cast<size_t>(dwReadDataSize)
+		);
+		std::cout << tmp << std::endl;
+	}
+
+	return void();
+}
+
 int main()
 {
+	/*
 	CURLDownload * downloader = new CURLDownload("http://192.168.0.4:8085/windbg.exe");
 	downloader->DownloadMemory();
 	downloader->Write("D:\\test.exe");
+	*/
+
+	ExampleWinHttp();
+
 
 }

@@ -40,9 +40,9 @@ BOOL CURLDownload::Write(const char* path)
 	default:
 		break;
 	}
-	const std::string buf = m_request->GetResponseBody();
-	fwrite(buf.c_str(), 1, buf.size(), fd);
-	fclose(fd);
+	//const std::string buf = m_request->GetResponseBody();
+	//fwrite(buf.c_str(), 1, buf.size(), fd);
+	//fclose(fd);
 	fd = NULL;
 
 	return ret;
