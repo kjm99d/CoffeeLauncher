@@ -28,9 +28,9 @@ void ExampleWinHttp()
 {
 	CRequest client;
 
-	client.Open(RequestMethod::kGET, L"http://10.81.10.160:5000/test.txt");
+	client.Open(RequestMethod::kPOST, L"http://127.0.0.1:5000/form");
 	client.SetHeader(L"user-agent", L"Hello");
-	client.Send();
+	client.Send(L"a=10&b=3");
 
 	//client.Request();
 

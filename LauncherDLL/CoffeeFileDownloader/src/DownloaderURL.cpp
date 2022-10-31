@@ -20,7 +20,7 @@ CURLDownload::CURLDownload(const char* url)
 
 	MultiByteToWideChar(CP_ACP, 0, m_url, -1, szUrl, sizeof(szUrl));
 
-	m_request->SetURL(szUrl);
+	//m_request->SetURL(szUrl);
 
 }
 
@@ -52,8 +52,8 @@ BOOL CURLDownload::DownloadMemory()
 {
 	BOOL ret = false;
 
-	m_request->SetMethod(RequestMethod::kGET);
-	m_request->Request();
+	//m_request->SetMethod(RequestMethod::kGET);
+	//m_request->Request();
 
 	return ret;
 }

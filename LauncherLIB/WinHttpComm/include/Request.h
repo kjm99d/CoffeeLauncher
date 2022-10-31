@@ -52,8 +52,6 @@ public:
 	~CRequest();
 
 public:
-	RequestError GetLastError();
-
 	/**
 	 * @brief 세션을 열고 동작에 필요한 URL 정보를 파싱하는 함수.
 	 * 
@@ -95,53 +93,6 @@ public:
 	 * \return Response Header Status Code
 	 */
 	DWORD GetStatusCode();
-	/*
-	* // ================================================ //
-	*/
-
-
-
-
-	/**
-	 * \brief Set[...] 기반의 함수로 설정된 다양한 파라미터 옵션을 기반으로 웹서버에 데이터를 요청합니다.
-	 * 
-	 * \return 에러코드
-	 */
-	int Request();
-
-	
-	/**
-	 * \brief 요청할 URL을 설정합니다.
-	 * 
-	 * \param url - 요청 URL을 입력합니다.
-	 */
-	void SetURL(const wchar_t* url);
-
-	/**
-	 * \brief 요청 메소드를 설정합니다.
-	 * 
-	 * \param method - RequestMethod Enum 참조
-	 */
-	void SetMethod(const RequestMethod method);
-
-
-
-	/**
-	 * \brief std::pair 타입으로된 배열을 입력으로 받아 헤더를 구성합니다.
-	 * 
-	 * \param headers header key와 value로 구성된 배열
-	 */
-	void SetHeader(request_header headers);
-
-
-
-	/**
-	 * \brief 요청 파라미터에 들어갈 페이로드를 설정한다.
-	 * \brief 만약 GET 방식의 요청인 경우 페이로드를 설정하지 않는다.
-	 * 
-	 * \param payload - 페이로드
-	 */
-	void SetPayload(const wchar_t* payload);
 
 
 
