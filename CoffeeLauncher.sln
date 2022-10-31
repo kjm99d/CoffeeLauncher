@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LauncherDLL", "LauncherDLL"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeLauncherTest", "LauncherEXE\CoffeeLauncherTest\CoffeeLauncherTest.vcxproj", "{2C2BBDAB-6C77-4FD0-837F-6093F8E6ECE1}"
 	ProjectSection(ProjectDependencies) = postProject
+		{4E25308E-7F93-4295-9AA7-3E62B44C4974} = {4E25308E-7F93-4295-9AA7-3E62B44C4974}
 		{91633857-71CB-4678-B150-10CD5FEF8A70} = {91633857-71CB-4678-B150-10CD5FEF8A70}
 	EndProjectSection
 EndProject
