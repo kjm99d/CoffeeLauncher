@@ -13,7 +13,7 @@ CRequest::~CRequest()
 }
 
 void CRequest::Open(RequestMethod method, const wchar_t* url)
-{	
+{
 	// Create Session
 	CreateSession();
 	// SetComponent
@@ -38,21 +38,31 @@ void CRequest::Open(RequestMethod method, const wchar_t* url)
 	}
 }
 
-void CRequest::Send(const wchar_t* form)
+void CRequest::Send()
 {
-	int nLenForm = 0;
-	LPVOID lpForm = NULL;
-	if (form)
-	{
-		nLenForm = lstrlenW(form);
+	Send(NULL, NULL);
+}
 
-		char strTxt[2048] = {};
-		WideCharToMultiByte(CP_ACP, 0, form, -1, strTxt, 2048, NULL, NULL);
+void CRequest::Send(const wchar_t* strForm)
+{
+	char szMbcsFormData[2048] = {};
+	//WideCharToMultiByte(CP_ACP, 0, strForm, -1, szMbcsFormData, 2048, NULL, NULL);
+	WideCharToMultiByte(CP_UTF8, 0, strForm, -1, szMbcsFormData, 2048, NULL, NULL);
 
-		// Content-Type 헤더를 쓴다.
-		SetHeader(L"Content-Type", L"application/x-www-form-urlencoded");
-		lpForm = strTxt;
-	}
+
+	int nLenForm = strlen(szMbcsFormData);
+
+	// Content-Type 헤더를 쓴다.
+	SetHeader(L"Content-Type", L"application/x-www-form-urlencoded");
+	
+	Send(szMbcsFormData, nLenForm);
+
+}
+
+
+void CRequest::Send(char* szForm, int nLenForm)
+{
+	LPVOID lpForm = static_cast<LPVOID>(szForm);
 
 
 
@@ -87,11 +97,11 @@ void CRequest::SetHeader(const wchar_t* key, const wchar_t* value)
 
 const wchar_t* CRequest::StrRequestMethodW(const RequestMethod method)
 {
-	const WCHAR* wcsGet		= L"GET";
-	const WCHAR* wcsPost	= L"POST";
-	const WCHAR* wcsDelete	= L"DELETE";
-	const WCHAR* wcsPut		= L"PUT";
-	const WCHAR* wcsPatch	= L"PATCH";
+	const WCHAR* wcsGet = L"GET";
+	const WCHAR* wcsPost = L"POST";
+	const WCHAR* wcsDelete = L"DELETE";
+	const WCHAR* wcsPut = L"PUT";
+	const WCHAR* wcsPatch = L"PATCH";
 
 	const WCHAR* strMethod;
 
@@ -102,7 +112,7 @@ const wchar_t* CRequest::StrRequestMethodW(const RequestMethod method)
 	case RequestMethod::kDELETE:	strMethod = wcsDelete;	break;
 	case RequestMethod::kPUT:		strMethod = wcsPut;		break;
 	case RequestMethod::kPATCH:		strMethod = wcsPatch;	break;
-		
+
 	default:
 		strMethod = L"Error";
 		OutputDebugString(L"Error: Request Method check !");
@@ -128,7 +138,7 @@ void CRequest::CreateSession(const wchar_t* session)
 
 
 }
-void CRequest::SetComponent(const wchar_t * url)
+void CRequest::SetComponent(const wchar_t* url)
 {
 
 	ZeroMemory(&m_urlComponents, sizeof(URL_COMPONENTS));
@@ -152,9 +162,18 @@ DWORD CRequest::GetStatusCode()
 	return m_dwStatusCode;
 }
 
-BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage,DWORD& dwReadDataSize)
+static int i = 0;
+FILE* fd = NULL;
+BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 {
-	RtlZeroMemory(m_ResponseBuffer, sizeof(m_ResponseBuffer) / sizeof(WCHAR));
+	if (i == 0)
+	{
+		i = 1;
+
+		fopen_s(&fd, "a.json", "w");
+	}
+
+	RtlZeroMemory(m_ResponseBuffer, sizeof(m_ResponseBuffer));
 	if (m_dwStatusCode == HTTP_STATUS_OK)
 	{
 
@@ -163,16 +182,25 @@ BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage,DWORD& dwReadDataSize)
 #if 0
 		do {
 
-			
+
 
 		} while (dwReadDataSize >= 4096);
 #else
+		char MB[4096] = { 0, };
 		BOOL status = WinHttpReadData(m_hRequest, m_ResponseBuffer, sizeof(m_ResponseBuffer), &dwTempReadDataSize);
+
+
+
+		
 		status = (status && dwTempReadDataSize);
 		if (status)
 		{
-			pbBufferStorage = m_ResponseBuffer;
+			pbBufferStorage = (PBYTE)m_ResponseBuffer;
 			dwReadDataSize = dwTempReadDataSize;
+
+			fwrite(m_ResponseBuffer, 1, dwTempReadDataSize, fd);
+			fclose(fd);
+
 		}
 		else
 		{
@@ -180,7 +208,7 @@ BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage,DWORD& dwReadDataSize)
 			dwReadDataSize = 0;
 		}
 		return status;
-		
+
 #endif
 	}
 	else {
@@ -203,7 +231,7 @@ const char* GetRequestErrorString(RequestError err)
 	const char* ret;
 	switch (err)
 	{
-	//case RequestError::ERROR_NONE: 
+		//case RequestError::ERROR_NONE: 
 	default:
 		ret = NULL;
 		break;
