@@ -47,11 +47,8 @@ class WINHTTPCOMM_EXPORT CRequest
 {
 
 public:
-	CRequest() = delete;
+	CRequest() = default;
 	CRequest(const CRequest&) = delete;
-
-	CRequest(const wchar_t* url);
-	CRequest(const RequestMethod method, wchar_t *url);
 	~CRequest();
 
 public:
@@ -80,7 +77,7 @@ public:
 	 * \param form - 폼 정보를 의미한다.
 	 * \param Example : 
 	 */
-	void Send(const wchar_t* form);
+	void Send(const wchar_t* form = NULL);
 
 
 	/**
@@ -155,7 +152,7 @@ protected:
 	 * 
 	 * \return 
 	 */
-	const wchar_t* StrRequestMethodW();
+	const wchar_t* StrRequestMethodW(const RequestMethod method = kGET);
 	
 
 protected:

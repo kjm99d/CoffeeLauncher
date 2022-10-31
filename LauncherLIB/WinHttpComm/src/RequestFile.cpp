@@ -1,6 +1,6 @@
 #include "RequestFile.h"
 
-CRequestFile::CRequestFile(FILE* fd) : CRequest(L"aa")
+CRequestFile::CRequestFile(FILE* fd) : CRequest()
 {
 	m_fd = fd;
 }

@@ -4,14 +4,14 @@
 #pragma comment(lib, "WinHttpComm.lib")
 
 
-CURLDownload::CURLDownload() : m_request(new CRequest(L"aa")), m_url(NULL)
+CURLDownload::CURLDownload() : m_request(new CRequest()), m_url(NULL)
 {
 	OutputDebugString(L"A");
 }
 
 CURLDownload::CURLDownload(const char* url)
 {
-	m_request = new CRequest(L"aa");
+	m_request = new CRequest();
 	m_url = url;
 
 	//CURLDownload();

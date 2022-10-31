@@ -5,6 +5,7 @@
 #pragma comment (lib, "winhttp.lib")
 
 // ======================================================================= //
+#if 0
 CRequest::CRequest(const wchar_t* url)
 {
 	OutputDebugString(L"CRequest Init()");
@@ -40,6 +41,8 @@ CRequest::CRequest(const RequestMethod method, wchar_t* url)
 	
 }
 
+#endif
+
 CRequest::~CRequest()
 {
 	OutputDebugString(L"CRequest destroy()");
@@ -57,11 +60,46 @@ void CRequest::Open(RequestMethod method, const wchar_t* url)
 	CreateSession();
 	// SetComponent
 	SetComponent(url);
+
+	// 커넥션 열고
+	const INTERNET_PORT nPort = m_urlComponents.nPort; /* WORD */
+	m_hConnect = WinHttpConnect(hSession, m_szHostName, nPort, 0);
+	if (m_hConnect == NULL) {
+		WinHttpCloseHandle(hSession);
+		//return -3;
+	}
+
+	const wchar_t* wcsMethod = StrRequestMethodW(method);
+	m_hRequest = WinHttpOpenRequest(
+		m_hConnect, wcsMethod, m_szUrlPath,
+		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+	if (m_hRequest == NULL) {
+		WinHttpCloseHandle(m_hConnect);
+		WinHttpCloseHandle(hSession);
+		//return -4;
+	}
 }
 
 void CRequest::Send(const wchar_t* form)
 {
-	
+
+	if (!WinHttpSendRequest(m_hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) {
+		DWORD dwError = GetLastError();
+		WinHttpCloseHandle(m_hRequest);
+		WinHttpCloseHandle(m_hConnect);
+		WinHttpCloseHandle(hSession);
+		//return -5;
+	}
+
+	WinHttpReceiveResponse(m_hRequest, NULL);
+
+	DWORD dwSize;
+	dwSize = sizeof(DWORD);
+	WinHttpQueryHeaders(m_hRequest,
+		WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,
+		WINHTTP_HEADER_NAME_BY_INDEX,
+		&m_dwStatusCode,
+		&dwSize, WINHTTP_NO_HEADER_INDEX);
 }
 
 int CRequest::Request()
@@ -130,7 +168,11 @@ void CRequest::SetMethod(const RequestMethod method)
 
 void CRequest::SetHeader(const wchar_t* key, const wchar_t* value)
 {
-	m_headers.push_back({ key, value });
+
+	wchar_t szHeader[2048] = { 0, };
+	swprintf_s(szHeader, 2048, L"%s: %s", key, value);
+
+	BOOL status = WinHttpAddRequestHeaders(m_hRequest, szHeader, -1L, WINHTTP_ADDREQ_FLAG_ADD);
 }
 
 void CRequest::SetHeader(request_header headers)
@@ -153,7 +195,7 @@ void CRequest::SetURL(const wchar_t* url)
 }
 
 
-const wchar_t* CRequest::StrRequestMethodW()
+const wchar_t* CRequest::StrRequestMethodW(const RequestMethod method)
 {
 	const WCHAR* wcsGet		= L"GET";
 	const WCHAR* wcsPost	= L"POST";
@@ -163,7 +205,7 @@ const wchar_t* CRequest::StrRequestMethodW()
 
 	const WCHAR* strMethod;
 
-	switch (m_method)
+	switch (method)
 	{
 	case RequestMethod::kGET:		strMethod = wcsGet;		break;
 	case RequestMethod::kPOST:		strMethod = wcsPost;	break;
@@ -181,7 +223,7 @@ const wchar_t* CRequest::StrRequestMethodW()
 
 }
 
-void CRequest::CreateSession(const wchar_t* session = NULL)
+void CRequest::CreateSession(const wchar_t* session)
 {
 	/*
 	* 현재 hSession 값이 NULL일 경우에만, 새로운 세션을 생성 시키고,
