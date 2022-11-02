@@ -88,7 +88,17 @@ public:
 	 */
 	DWORD GetStatusCode();
 
+	/**
+	 * Request Header의 Context-Type 정보를 application/x-www-form-urlencoded 방식으로 호출하는 함수.
+	 * 
+	 */
 	void Send();
+
+	/**
+	 * GET을 제외한 다른 메소드 사용 시, Payload 정보를 전달하는 함수.
+	 * 
+	 * \param strForm - Payload 정보
+	 */
 	void Send(const wchar_t* strForm);
 
 
@@ -102,6 +112,12 @@ protected:
 	 */
 	const wchar_t* StrRequestMethodW(const RequestMethod method = kGET);
 
+	/**
+	 * 서버에 실제로 요청을 하는 함수.
+	 * 
+	 * \param szForm - Payload 정보  (MultiByte로 처리됨)
+	 * \param nLenForm - Payload의 길이
+	 */
 	void Send(char* szForm, int nLenForm);
 	
 

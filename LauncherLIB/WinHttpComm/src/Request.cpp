@@ -46,7 +46,6 @@ void CRequest::Send()
 void CRequest::Send(const wchar_t* strForm)
 {
 	char szMbcsFormData[2048] = {};
-	//WideCharToMultiByte(CP_ACP, 0, strForm, -1, szMbcsFormData, 2048, NULL, NULL);
 	WideCharToMultiByte(CP_UTF8, 0, strForm, -1, szMbcsFormData, 2048, NULL, NULL);
 
 
@@ -162,44 +161,20 @@ DWORD CRequest::GetStatusCode()
 	return m_dwStatusCode;
 }
 
-static int i = 0;
-FILE* fd = NULL;
 BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 {
-	if (i == 0)
-	{
-		i = 1;
-
-		fopen_s(&fd, "a.json", "w");
-	}
 
 	RtlZeroMemory(m_ResponseBuffer, sizeof(m_ResponseBuffer));
 	if (m_dwStatusCode == HTTP_STATUS_OK)
 	{
 
 		DWORD dwTempReadDataSize;
-
-#if 0
-		do {
-
-
-
-		} while (dwReadDataSize >= 4096);
-#else
-		char MB[4096] = { 0, };
 		BOOL status = WinHttpReadData(m_hRequest, m_ResponseBuffer, sizeof(m_ResponseBuffer), &dwTempReadDataSize);
-
-
-
-		
-		status = (status && dwTempReadDataSize);
+		status = status & (dwTempReadDataSize > 0);
 		if (status)
 		{
 			pbBufferStorage = (PBYTE)m_ResponseBuffer;
 			dwReadDataSize = dwTempReadDataSize;
-
-			fwrite(m_ResponseBuffer, 1, dwTempReadDataSize, fd);
-			fclose(fd);
 
 		}
 		else
@@ -208,8 +183,6 @@ BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 			dwReadDataSize = 0;
 		}
 		return status;
-
-#endif
 	}
 	else {
 		wchar_t szBuf[256];
