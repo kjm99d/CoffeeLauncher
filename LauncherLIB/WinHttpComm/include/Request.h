@@ -68,14 +68,8 @@ public:
 	 * \param value - 헤더의 밸류값
 	 */
 	void SetHeader(const wchar_t* key, const wchar_t* value);
+
 	
-	/**
-	 * 실질적인 요청을 진행한다.
-	 * 
-	 * \param form - 폼 정보를 의미한다.
-	 * \param Example : 
-	 */
-	void Send(const wchar_t* form = NULL);
 
 
 	/**
@@ -94,6 +88,19 @@ public:
 	 */
 	DWORD GetStatusCode();
 
+	/**
+	 * Request Header의 Context-Type 정보를 application/x-www-form-urlencoded 방식으로 호출하는 함수.
+	 * 
+	 */
+	void Send();
+
+	/**
+	 * GET을 제외한 다른 메소드 사용 시, Payload 정보를 전달하는 함수.
+	 * 
+	 * \param strForm - Payload 정보
+	 */
+	void Send(const wchar_t* strForm);
+
 
 
 
@@ -104,6 +111,14 @@ protected:
 	 * \return 
 	 */
 	const wchar_t* StrRequestMethodW(const RequestMethod method = kGET);
+
+	/**
+	 * 서버에 실제로 요청을 하는 함수.
+	 * 
+	 * \param szForm - Payload 정보  (MultiByte로 처리됨)
+	 * \param nLenForm - Payload의 길이
+	 */
+	void Send(char* szForm, int nLenForm);
 	
 
 protected:
@@ -125,7 +140,7 @@ private:
 
 
 private:
-	BYTE           m_ResponseBuffer[4096];
+	char           m_ResponseBuffer[4096];
 	URL_COMPONENTS m_urlComponents;
 	WCHAR          m_szHostName[256], m_szUrlPath[2048];
 	HINTERNET      m_hConnect, m_hRequest;
