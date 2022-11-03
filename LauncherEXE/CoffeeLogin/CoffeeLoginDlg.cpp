@@ -7,6 +7,7 @@
 #include "CoffeeLogin.h"
 #include "CoffeeLoginDlg.h"
 #include "afxdialogex.h"
+#include "StaticLogin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -160,6 +161,7 @@ HCURSOR CCoffeeLoginDlg::OnQueryDragIcon()
 
 void CCoffeeLoginDlg::OnBnClickedButtonLogin()
 {
+
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString strUserId, strUserPw;
 	m_edit_login_id.GetWindowTextW(strUserId);
@@ -171,6 +173,18 @@ void CCoffeeLoginDlg::OnBnClickedButtonLogin()
 
 		return void();
 	}
+
+	CStaticLogin login;
+	BOOL LoginStatus = login.Login(strUserId, strUserPw);
+	if (LoginStatus)
+	{
+		MessageBox(L"로그인 성공");
+	}
+	else {
+		MessageBox(L"로그인 실패");
+
+	}
+
 
 
 }
