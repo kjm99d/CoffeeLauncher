@@ -11,16 +11,12 @@
 class DOWNLOADER_EXPORT CURLDownload {
 public:
 	CURLDownload();
-	CURLDownload(const char* url);
 	~CURLDownload();
 
 public:
-	BOOL Write(const char * path);
+	BOOL Download(const char * url, const char * path);
+	BOOL Download(const wchar_t * url, const wchar_t * path);
 	BOOL DownloadMemory();
-
-
-private:
-	const char* m_url;
 
 private:
 	CRequest* m_request;
