@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\Login">
+      <UniqueIdentifier>{8dfef125-08ec-4e28-b690-dc91bbb3f8ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Login">
+      <UniqueIdentifier>{91a0b8a9-a8aa-4983-ba68-eb9839d25110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoffeeLogin.h">
@@ -33,6 +39,15 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="include\ILogin.h">
+      <Filter>헤더 파일\Login</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HTTPLogin.h">
+      <Filter>헤더 파일\Login</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StaticLogin.h">
+      <Filter>헤더 파일\Login</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CoffeeLogin.cpp">
@@ -43,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HTTPLogin.cpp">
+      <Filter>소스 파일\Login</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StaticLogin.cpp">
+      <Filter>소스 파일\Login</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
