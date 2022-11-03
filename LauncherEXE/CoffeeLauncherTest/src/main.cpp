@@ -39,6 +39,13 @@ namespace EXAMPLE {
 			printf("%s", responseBuffer);
 		}
 	};
+
+
+	void FileDownload()
+	{
+		CURLDownload loader;
+		loader.Download("http://10.20.10.73/635f78d1b22de.jpg", "D:\\test.jpg");
+	}
 }
 
 void ExampleWinHttp()
@@ -56,7 +63,8 @@ int main()
 	downloader->Write("D:\\test.exe");
 	*/
 
-	ExampleWinHttp();
-
+	//ExampleWinHttp();
+	
+	EXAMPLE::FileDownload();
 
 }

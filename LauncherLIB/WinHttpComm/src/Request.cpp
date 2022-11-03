@@ -169,8 +169,9 @@ BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 	{
 
 		DWORD dwTempReadDataSize;
-		BOOL status = WinHttpReadData(m_hRequest, m_ResponseBuffer, sizeof(m_ResponseBuffer), &dwTempReadDataSize);
-		status = status & (dwTempReadDataSize > 0);
+		DWORD dwBufferSize = sizeof(m_ResponseBuffer);
+		BOOL status = WinHttpReadData(m_hRequest, m_ResponseBuffer, dwBufferSize, &dwTempReadDataSize);
+		status = status & (dwTempReadDataSize >= dwBufferSize);
 		if (status)
 		{
 			pbBufferStorage = (PBYTE)m_ResponseBuffer;

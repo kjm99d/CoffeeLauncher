@@ -73,7 +73,9 @@ public:
 
 
 	/**
-	 * ResponseBody Byte 정보를 전달받는 함수..
+	 * @brief ResponseBody Byte 정보를 전달받는 함수.
+	 * @brief 읽을 데이터가 남아 있을 경우 반환 값이 True 이다.
+	 * 
 	 * 
 	 * \param pbBufferStorage - PBYTE 형태로 정의된 변수를 입력으로 받아 포인터를 전달 받는다.
 	 * \param dwReadDataSize - DWORD 형태로 정의된 변수를 입력 받아, 서버를 통해 전달 받은 데이터의 크기를 가져온다.
@@ -140,7 +142,7 @@ private:
 
 
 private:
-	char           m_ResponseBuffer[4096];
+	PBYTE           m_ResponseBuffer[4096];
 	URL_COMPONENTS m_urlComponents;
 	WCHAR          m_szHostName[256], m_szUrlPath[2048];
 	HINTERNET      m_hConnect, m_hRequest;

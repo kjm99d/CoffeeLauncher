@@ -4,56 +4,67 @@
 #pragma comment(lib, "WinHttpComm.lib")
 
 
-CURLDownload::CURLDownload() : m_request(new CRequest()), m_url(NULL)
-{
-	OutputDebugString(L"A");
-}
-
-CURLDownload::CURLDownload(const char* url)
+CURLDownload::CURLDownload()
 {
 	m_request = new CRequest();
-	m_url = url;
-
-	//CURLDownload();
-	OutputDebugString(L"B");
-	WCHAR szUrl[2048] = { 0, };
-
-	MultiByteToWideChar(CP_ACP, 0, m_url, -1, szUrl, sizeof(szUrl));
-
-	//m_request->SetURL(szUrl);
-
 }
 
 CURLDownload::~CURLDownload()
 {
-	delete m_request;
+	if (m_request) {
+		delete m_request;
+		m_request = nullptr;
+	}
 }
 
-BOOL CURLDownload::Write(const char* path)
+BOOL CURLDownload::Download(const char* url, const char* path)
 {
-	BOOL ret = false;
+	wchar_t wszUrl[2048] = { 0, };
+	MultiByteToWideChar(CP_ACP, 0, url, -1, wszUrl, 2048);
 
-	FILE* fd = NULL;
-	errno_t errCode = fopen_s(&fd, path, "wb");
-	switch (errCode)
+	m_request->Open(RequestMethod::kGET, wszUrl);
+	m_request->Send();
+
+
+	// 정상응답값이 아닌 경우
+	if (m_request->GetStatusCode() != 200) 
 	{
-	default:
-		break;
+		return false;
 	}
-	//const std::string buf = m_request->GetResponseBody();
-	//fwrite(buf.c_str(), 1, buf.size(), fd);
-	//fclose(fd);
+	
+	FILE* fd = NULL;
+	fopen_s(&fd, path, "wb");
+
+
+
+	bool status = true;
+	while (status)
+	{
+		PBYTE buffer = nullptr;
+		DWORD dwBufferSize = 0;
+		status = m_request->GetBuffer(buffer, dwBufferSize);
+
+		if (buffer == nullptr)
+		{
+			OutputDebugString(L"Response Buffer Size = 0");
+		}
+
+		fwrite(buffer, 1, dwBufferSize, fd);
+	}
+
+	fclose(fd);
 	fd = NULL;
 
-	return ret;
+
+}
+
+BOOL CURLDownload::Download(const wchar_t* url, const wchar_t* path)
+{
+	return 0;
 }
 
 BOOL CURLDownload::DownloadMemory()
 {
 	BOOL ret = false;
-
-	//m_request->SetMethod(RequestMethod::kGET);
-	//m_request->Request();
-
 	return ret;
 }
