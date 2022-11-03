@@ -60,7 +60,14 @@ BOOL CURLDownload::Download(const char* url, const char* path)
 
 BOOL CURLDownload::Download(const wchar_t* url, const wchar_t* path)
 {
-	return 0;
+	char szUrl[2048] = { 0, };
+	char szPath[2048] = { 0, };
+
+	WideCharToMultiByte(CP_ACP, 0, url, -1, szUrl, sizeof(szUrl), 0, 0);
+	WideCharToMultiByte(CP_ACP, 0, url, -1, szPath, sizeof(szPath), 0, 0);
+
+
+	return Download(szUrl, szPath);
 }
 
 BOOL CURLDownload::DownloadMemory()
