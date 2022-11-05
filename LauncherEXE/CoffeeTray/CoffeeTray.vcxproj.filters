@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\LauncherCommon">
+      <UniqueIdentifier>{a706ba2a-f4e1-4f71-abe5-e4d5874eec87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoffeeTray.h">
@@ -32,6 +35,12 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LauncherCommon\include\MessageID.h">
+      <Filter>헤더 파일\LauncherCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LauncherCommon\include\MutexID.h">
+      <Filter>헤더 파일\LauncherCommon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -78,28 +78,28 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IncludePath>$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LauncherCommon\include\;$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IncludePath>$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LauncherCommon\include\;$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IncludePath>$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LauncherCommon\include\;$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IncludePath>$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LauncherCommon\include\;$(ProjectDir);$(ProjectDir)include\;$(SolutionDir)LauncherLIB\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

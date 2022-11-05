@@ -7,6 +7,7 @@
 #include "CoffeeLogin.h"
 #include "CoffeeLoginDlg.h"
 #include "afxdialogex.h"
+
 #include "StaticLogin.h"
 
 #ifdef _DEBUG
@@ -76,6 +77,7 @@ END_MESSAGE_MAP()
 
 BOOL CCoffeeLoginDlg::OnInitDialog()
 {
+
 	CDialogEx::OnInitDialog();
 
 	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
@@ -104,6 +106,8 @@ BOOL CCoffeeLoginDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+
+
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }

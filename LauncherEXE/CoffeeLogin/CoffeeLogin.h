@@ -9,13 +9,17 @@
 #endif
 
 #include "resource.h"		// 주 기호입니다.
+#include "MutexCreator/include/MutexCreator.h"
+#pragma comment(lib, "MutexCreator.lib")
+
+#include "MutexID.h"
 
 
 // CCoffeeLoginApp:
 // 이 클래스의 구현에 대해서는 CoffeeLogin.cpp을(를) 참조하세요.
 //
 
-class CCoffeeLoginApp : public CWinApp
+class CCoffeeLoginApp : public CWinApp, CMutexCreator
 {
 public:
 	CCoffeeLoginApp();
