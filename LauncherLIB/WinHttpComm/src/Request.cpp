@@ -137,6 +137,7 @@ void CRequest::CreateSession(const wchar_t* session)
 
 
 }
+
 void CRequest::SetComponent(const wchar_t* url)
 {
 
