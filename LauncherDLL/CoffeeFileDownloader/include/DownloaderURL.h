@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "WinHttpComm/include/Request.h"
 
 #ifdef COFFEEFILEDOWNLOADER_EXPORTS
@@ -15,28 +15,28 @@ public:
 
 public:
 	/**
-	 * @brief ´Ù¿î·Îµå ¹ŞÀ» URL°ú ÀúÀåµÉ ÆÄÀÏ À§Ä¡ Á¤º¸¸¦ ÆÄ¶ó¹ÌÅÍ·Î ¹Ş¾Æ
-	 * @brief ÆÄÀÏÀ» ÇÏµåµğ½ºÅ©¿¡ ÀúÀåÇØÁÖ´Â ÇÔ¼ö
+	 * @brief ë‹¤ìš´ë¡œë“œ ë°›ì„ URLê³¼ ì €ì¥ë  íŒŒì¼ ìœ„ì¹˜ ì •ë³´ë¥¼ íŒŒë¼ë¯¸í„°ë¡œ ë°›ì•„
+	 * @brief íŒŒì¼ì„ í•˜ë“œë””ìŠ¤í¬ì— ì €ì¥í•´ì£¼ëŠ” í•¨ìˆ˜
 	 * 
-	 * \param url - ÆÄÀÏÀÌ ÀúÀåµÈ ÆÄÀÏ ¼­¹ö ÁÖ¼Ò
-	 * \param path - ÇÏµåµğ½ºÅ©ÀÇ ÀúÀåµÉ °æ·Î
-	 * \return - ÆÄÀÏ ÀúÀåÀÇ ¼º°ø¿©ºÎ
+	 * \param url - íŒŒì¼ì´ ì €ì¥ëœ íŒŒì¼ ì„œë²„ ì£¼ì†Œ
+	 * \param path - í•˜ë“œë””ìŠ¤í¬ì˜ ì €ì¥ë  ê²½ë¡œ
+	 * \return - íŒŒì¼ ì €ì¥ì˜ ì„±ê³µì—¬ë¶€
 	 */
 	BOOL Download(const char * url, const char * path);
 
 
 	/**
-	 * Wide Character Å¸ÀÔÀÇ ¹®ÀÚ¿­À» ¹Ş¾Æ ´Ù¿î·Îµå ÇØÁÖ´Â ÇÔ¼ö.
+	 * Wide Character íƒ€ì…ì˜ ë¬¸ìì—´ì„ ë°›ì•„ ë‹¤ìš´ë¡œë“œ í•´ì£¼ëŠ” í•¨ìˆ˜.
 	 * 
-	 * \param url - ÆÄÀÏÀÌ ÀúÀåµÈ ÆÄÀÏ ¼­¹ö ÁÖ¼Ò
-	 * \param path - ÇÏµåµğ½ºÅ©ÀÇ ÀúÀåµÉ °æ·Î
-	 * \return - ÆÄÀÏ ÀúÀåÀÇ ¼º°ø ¿©ºÎ
+	 * \param url - íŒŒì¼ì´ ì €ì¥ëœ íŒŒì¼ ì„œë²„ ì£¼ì†Œ
+	 * \param path - í•˜ë“œë””ìŠ¤í¬ì˜ ì €ì¥ë  ê²½ë¡œ
+	 * \return - íŒŒì¼ ì €ì¥ì˜ ì„±ê³µ ì—¬ë¶€
 	 */
 	BOOL Download(const wchar_t * url, const wchar_t * path);
 
 	/**
-	 * @brief ¸Ş¸ğ¸®¿¡ ÆÄÀÏÀ» ÀúÀåÇØÁÖ´Â ÇÔ¼ö.
-	 * @brief ÇöÀç ±¸Çö µÇÁö ¾ÊÀ½.
+	 * @brief ë©”ëª¨ë¦¬ì— íŒŒì¼ì„ ì €ì¥í•´ì£¼ëŠ” í•¨ìˆ˜.
+	 * @brief í˜„ì¬ êµ¬í˜„ ë˜ì§€ ì•ŠìŒ.
 	 * \return 
 	 */
 	BOOL DownloadMemory();

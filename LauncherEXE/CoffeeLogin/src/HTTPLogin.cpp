@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "HTTPLogin.h"
 #include "WinHttpComm/include/Request.h"
 

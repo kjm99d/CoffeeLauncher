@@ -1,0 +1,15 @@
+root = true
+
+
+# Saved File utf-8 
+[*]
+charset = utf-8-bom
+
+
+# All files
+[*]
+indent_style = space
+
+# Xml files
+[*.xml]
+indent_size = 2

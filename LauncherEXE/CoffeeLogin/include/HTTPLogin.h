@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ILogin.h"
 
 class CHttpLogin : public ILogin
