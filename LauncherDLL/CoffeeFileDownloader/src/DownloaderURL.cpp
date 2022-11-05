@@ -1,4 +1,4 @@
-#include <Windows.h>
+ï»¿#include <Windows.h>
 #include <stringapiset.h>
 #include "DownloaderURL.h"
 #pragma comment(lib, "WinHttpComm.lib")
@@ -26,7 +26,7 @@ BOOL CURLDownload::Download(const char* url, const char* path)
 	m_request->Send();
 
 
-	// Á¤»óÀÀ´ä°ªÀÌ ¾Æ´Ñ °æ¿ì
+	// ì •ìƒì‘ë‹µê°’ì´ ì•„ë‹Œ ê²½ìš°
 	if (m_request->GetStatusCode() != 200) 
 	{
 		return false;

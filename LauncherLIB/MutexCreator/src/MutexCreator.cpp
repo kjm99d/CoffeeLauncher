@@ -1,4 +1,4 @@
-#include "MutexCreator.h"
+﻿#include "MutexCreator.h"
 
 CMutexCreator::CMutexCreator(const char* id)
 {

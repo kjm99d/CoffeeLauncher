@@ -1,2 +1,2 @@
-#pragma once
-#define WM_TRAYICON_MSG WM_USER + 1 // <-- Æ®·¹ÀÌ ¾ÆÀÌÄÜÀ¸·Î ÀüÈ¯ÇÏ±â
+ï»¿#pragma once
+#define WM_TRAYICON_MSG WM_USER + 1 // <-- íŠ¸ë ˆì´ ì•„ì´ì½˜ìœ¼ë¡œ ì „í™˜í•˜ê¸°

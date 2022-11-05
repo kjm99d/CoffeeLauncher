@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef MUTEXCREATOR_EXPORTS
 	#define MUTEXCREATOR_EXPORT __declspec(dllexport) 

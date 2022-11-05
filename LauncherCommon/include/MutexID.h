@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define ID_MUTEX_COFFEE_MANAGER			"ID_MUTEX_COFFEE_MANAGER"
 #define ID_MUTEX_COFFEE_LOGIN			"ID_MUTEX_COFFEE_LOGIN"
