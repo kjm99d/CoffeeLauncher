@@ -23,7 +23,7 @@
     <ProjectGuid>{9D6814A7-36B5-49B0-94CC-EB2FBEA55359}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>CoffeeLogin</RootNamespace>
-    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
