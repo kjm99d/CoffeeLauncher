@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoffeeSetting", "LauncherDLL\CoffeeSetting\CoffeeSetting.vcxproj", "{683694FE-C783-4612-833A-0854134A2F9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -119,6 +121,14 @@ Global
 		{AFF8A8A1-A5A1-4D4A-B229-866E41C4E707}.Release|x64.Build.0 = Release|x64
 		{AFF8A8A1-A5A1-4D4A-B229-866E41C4E707}.Release|x86.ActiveCfg = Release|Win32
 		{AFF8A8A1-A5A1-4D4A-B229-866E41C4E707}.Release|x86.Build.0 = Release|Win32
+		{683694FE-C783-4612-833A-0854134A2F9C}.Debug|x64.ActiveCfg = Debug|x64
+		{683694FE-C783-4612-833A-0854134A2F9C}.Debug|x64.Build.0 = Debug|x64
+		{683694FE-C783-4612-833A-0854134A2F9C}.Debug|x86.ActiveCfg = Debug|Win32
+		{683694FE-C783-4612-833A-0854134A2F9C}.Debug|x86.Build.0 = Debug|Win32
+		{683694FE-C783-4612-833A-0854134A2F9C}.Release|x64.ActiveCfg = Release|x64
+		{683694FE-C783-4612-833A-0854134A2F9C}.Release|x64.Build.0 = Release|x64
+		{683694FE-C783-4612-833A-0854134A2F9C}.Release|x86.ActiveCfg = Release|Win32
+		{683694FE-C783-4612-833A-0854134A2F9C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +143,7 @@ Global
 		{193A2D28-C460-4CAD-BCAA-056FAF55405C} = {D2FCD713-796B-4B9D-A526-84ABBF51C737}
 		{91633857-71CB-4678-B150-10CD5FEF8A70} = {D2FCD713-796B-4B9D-A526-84ABBF51C737}
 		{AFF8A8A1-A5A1-4D4A-B229-866E41C4E707} = {67382102-333B-470B-AAEB-C84E04F38385}
+		{683694FE-C783-4612-833A-0854134A2F9C} = {D2FCD713-796B-4B9D-A526-84ABBF51C737}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1CA441B-381F-4E22-A19F-F96FC8CCEC90}
