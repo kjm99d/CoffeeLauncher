@@ -24,13 +24,10 @@
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\aes128\aes.h">
+    <ClInclude Include="include\AES128.h">
       <Filter>헤더 파일\AES128</Filter>
     </ClInclude>
-    <ClInclude Include="include\IXCodec.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AES128.h">
+    <ClInclude Include="include\Common.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,11 +35,8 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\aes128\AES.c">
-      <Filter>소스 파일\AES128</Filter>
-    </ClCompile>
     <ClCompile Include="src\AES128.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\AES128</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
