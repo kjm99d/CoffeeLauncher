@@ -13,6 +13,8 @@
 
 
 #include <vector>
+#include <CoffeeXCodec/include/AES128.h>
+#pragma comment(lib, "CoffeeXCodec.lib")
 using namespace std;
 
 namespace EXAMPLE {
@@ -46,6 +48,55 @@ namespace EXAMPLE {
 		CURLDownload loader;
 		loader.Download("http://10.20.10.73/635f78d1b22de.jpg", "D:\\test.jpg");
 	}
+
+    int fAES128()
+    {
+        //Random key
+        unsigned char key[] = { 0xEC, 0xFD, 0x08, 0xB0, 0x5D, 0x51, 0x3B, 0x81, 0x48, 0x69, 0x80, 0x1F, 0x23, 0xE7, 0x0B, 0xC7 };
+        AES128 aes;
+        aes.SetKey(key);
+
+        //message example
+        unsigned char message[] = "00hellohellohellohellohellohellohellohellohello";
+
+        cout << "Original message in hex:" << endl;
+        for (int i = 0; i < sizeof(message); i++) {
+            cout << hex << (int)message[i];
+            cout << " ";
+        }
+        cout << endl;
+        cout << endl;
+
+        unsigned char encryptedMessage[sizeof(message)];
+
+        //Encrypt the message 
+        aes.Encrypt(message, encryptedMessage, sizeof(message) / 16);
+
+
+        cout << "Encrypted message in hex:" << endl;
+        for (int i = 0; i < sizeof(message); i++) {
+            cout << hex << (int)encryptedMessage[i];
+            cout << " ";
+        }
+        cout << endl;
+        cout << endl;
+
+
+        unsigned char DencryptedMessage[sizeof(message)]; //should be equal to original one :)
+
+        //Decrypt the message
+        aes.Decrypt(encryptedMessage, DencryptedMessage, sizeof(message) / 16);
+
+        cout << "Final message in hex:" << endl;
+        for (int i = 0; i < sizeof(message); i++) {
+            cout << hex << (int)DencryptedMessage[i];
+            cout << " ";
+        }
+        cout << endl;
+        cout << endl;
+
+        return 0;
+    }
 }
 
 void ExampleWinHttp()
@@ -65,6 +116,7 @@ int main()
 
 	//ExampleWinHttp();
 	
-	EXAMPLE::FileDownload();
+    EXAMPLE::fAES128();
+	//EXAMPLE::FileDownload();
 
 }
