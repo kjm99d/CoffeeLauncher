@@ -17,6 +17,10 @@
 #pragma comment(lib, "CoffeeXCodec.lib")
 using namespace std;
 
+
+#include <CoffeeUtil/include/include.h>
+#pragma comment(lib, "CoffeeUtil.lib")
+
 namespace EXAMPLE {
 	void WinHttpRequest()
 	{
@@ -97,6 +101,28 @@ namespace EXAMPLE {
 
         return 0;
     }
+
+
+    bool ReadRegistry()
+    {
+        bool ret;
+        char szValue[128] = { 0, };
+        DWORD nLenValue = 0;
+
+        if (ret = RegKeyRead(HKEY_LOCAL_MACHINE,
+            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion", "ProgramFilesDir",
+            szValue, &nLenValue))
+        {
+            printf("SUCC \n");
+
+        }
+        else
+        {
+            printf("FAIL \n");
+        }
+        
+        return ret;
+    }
 }
 
 void ExampleWinHttp()
@@ -116,7 +142,8 @@ int main()
 
 	//ExampleWinHttp();
 	
-    EXAMPLE::fAES128();
+    //EXAMPLE::fAES128();
 	//EXAMPLE::FileDownload();
+    EXAMPLE::ReadRegistry();
 
 }
