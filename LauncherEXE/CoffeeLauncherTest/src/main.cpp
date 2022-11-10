@@ -144,6 +144,10 @@ int main()
 	
     //EXAMPLE::fAES128();
 	//EXAMPLE::FileDownload();
-    EXAMPLE::ReadRegistry();
+    //EXAMPLE::ReadRegistry();
+
+    BOOL bit = OS::Is64Bit();
+    OS::eType typeOS = OS::CurrentWindowVersion();
+    printf("%d", bit);
 
 }
