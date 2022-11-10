@@ -1,5 +1,5 @@
 ﻿#include "OS.h"
-#include <sysinfoapi.h>
+#include <stdio.h>
 
 typedef BOOL(WINAPI* LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
 
@@ -14,14 +14,10 @@ BOOL OS::Is64Bit()
     //Use GetModuleHandle to get a handle to the DLL that contains the function
     //and GetProcAddress to get a pointer to the function if available.
 
-    fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(
-        GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
-    if (NULL != fnIsWow64Process)
+    LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+    if (fnIsWow64Process && 0 == fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
     {
-        if (!fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
-        {
-            //handle error
-        }
+        printf("HANDLE IS NOT FOUND");
     }
     return bIsWow64;
 #endif
@@ -35,12 +31,16 @@ BOOL OS::Is64BitProcess(DWORD dwPID)
     HANDLE hProcess = 0;
     BOOL bIsWow64 = false;
     LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
-    if (fnIsWow64Process && 0 == fnIsWow64Process(hProcess, &bIsWow64))
+    if (fnIsWow64Process && fnIsWow64Process(hProcess, &bIsWow64))
+    {
+        bIsWow64 = ~bIsWow64;
+    }
+    else
     {
         // 함수 포인터를 찾았고, 호출의 결과가 실패인 경우 에러로 판단한다.
     }
 
-    return (bIsWow64 == 0);
+    return bIsWow64;
 
 }
 #endif
