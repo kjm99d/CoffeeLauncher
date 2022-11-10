@@ -1,39 +1,49 @@
 ﻿#include "OS.h"
 #include <sysinfoapi.h>
 
+typedef BOOL(WINAPI* LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+
 BOOL OS::Is64Bit()
 {
-    DWORD dwPid = GetCurrentProcessId();
+#ifdef _WIN64
+    return TRUE;
+#else
+    BOOL bIsWow64 = FALSE;
 
-    return Is64Bit(dwPid);
+    //IsWow64Process is not available on all supported versions of Windows.
+    //Use GetModuleHandle to get a handle to the DLL that contains the function
+    //and GetProcAddress to get a pointer to the function if available.
+
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+    if (NULL != fnIsWow64Process)
+    {
+        if (!fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
+        {
+            //handle error
+        }
+    }
+    return bIsWow64;
+#endif
 }
 
-BOOL OS::Is64Bit(DWORD dwPID)
+
+#if 0
+BOOL OS::Is64BitProcess(DWORD dwPID)
 {
-    HANDLE hWnd = 0;
-    if (GetCurrentProcessId() == dwPID)
+
+    HANDLE hProcess = 0;
+    BOOL bIsWow64 = false;
+    LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+    if (fnIsWow64Process && 0 == fnIsWow64Process(hProcess, &bIsWow64))
     {
-        hWnd = GetCurrentProcess();
-    }
-    else
-    {
-        OutputDebugString(L"Not Implementation yet !");
+        // 함수 포인터를 찾았고, 호출의 결과가 실패인 경우 에러로 판단한다.
     }
 
-    BOOL bWow64 = false;
-    // 반환값이 0이 아니면 함수 동작의 성공 여부
-    // 매개변수로 들어가는 BOOL 데이터에 대한 정보는 성공여부 0 == 64bit os
-    BOOL bFnx64Proc = IsWow64Process(hWnd, &bWow64);
-    if (FALSE == bFnx64Proc)
-    {
-        DWORD dwErr = GetLastError();
-    }
-    // MSDN 참조
-    // 성공인 경우 0을 리턴함
-    bWow64 = (bWow64 == 0);
+    return (bIsWow64 == 0);
 
-    return bWow64;
 }
+#endif
 
 OS::eType OS::CurrentWindowVersion()
 {

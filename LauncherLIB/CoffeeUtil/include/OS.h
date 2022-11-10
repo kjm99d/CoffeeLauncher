@@ -15,6 +15,9 @@ namespace OS {
     } eType;
 
     COFFEEUTIL_API BOOL Is64Bit();
-    COFFEEUTIL_API BOOL Is64Bit(DWORD dwPID);
     COFFEEUTIL_API eType CurrentWindowVersion();
 }
+
+
+
+// COFFEEUTIL_API BOOL Is64BitProcess(DWORD dwPID); <<< 얘는 프로세스 정보를 확인하는 용도로 쓰는거니 프로세스 라이브러리로 빠짐
