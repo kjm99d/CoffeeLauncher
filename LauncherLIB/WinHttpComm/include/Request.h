@@ -142,7 +142,7 @@ private:
 
 
 private:
-	PBYTE           m_ResponseBuffer[4096];
+	BYTE           m_ResponseBuffer[4096];
 	URL_COMPONENTS m_urlComponents;
 	WCHAR          m_szHostName[256], m_szUrlPath[2048];
 	HINTERNET      m_hConnect, m_hRequest;
