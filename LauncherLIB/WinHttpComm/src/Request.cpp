@@ -30,7 +30,7 @@ void CRequest::Open(RequestMethod method, const wchar_t* url)
 	const wchar_t* wcsMethod = StrRequestMethodW(method);
 	m_hRequest = WinHttpOpenRequest(
 		m_hConnect, wcsMethod, m_szUrlPath,
-		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_REFRESH + WINHTTP_FLAG_SECURE);
 	if (m_hRequest == NULL) {
 		WinHttpCloseHandle(m_hConnect);
 		WinHttpCloseHandle(hSession);
@@ -172,7 +172,7 @@ BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 		DWORD dwTempReadDataSize;
 		DWORD dwBufferSize = sizeof(m_ResponseBuffer);
 		BOOL status = WinHttpReadData(m_hRequest, m_ResponseBuffer, dwBufferSize, &dwTempReadDataSize);
-		status = status & (dwTempReadDataSize >= dwBufferSize);
+        status = status && static_cast<BOOL>(dwTempReadDataSize > 0);
 		if (status)
 		{
 			pbBufferStorage = (PBYTE)m_ResponseBuffer;
