@@ -21,6 +21,9 @@ using namespace std;
 #include <CoffeeUtil/include/include.h>
 #pragma comment(lib, "CoffeeUtil.lib")
 
+#include <CoffeeProcSearch/include/ProcessMonitor.h>
+#pragma comment(lib, "CoffeeProcSearch.lib")
+
 namespace EXAMPLE {
 	void WinHttpRequest()
 	{
@@ -149,5 +152,8 @@ int main()
     BOOL bit = OS::Is64Bit();
     OS::eType typeOS = OS::CurrentWindowVersion();
     printf("%d", bit);
+
+    BOOL bIsX64 = IsX64Process(17596);
+    printf("%d", bIsX64);
 
 }
