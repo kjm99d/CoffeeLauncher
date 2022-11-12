@@ -16,10 +16,6 @@ typedef struct _FIND_PROCESS_INFO{
 BOOL FindProcess(FIND_PROCESS_INFO * info);
 
 
-
-
-
-
 BOOL IsX64Process(DWORD dwPID)
 {
     BOOL bIsWow64 = 0;

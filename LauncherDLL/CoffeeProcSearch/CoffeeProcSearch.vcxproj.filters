@@ -18,7 +18,7 @@
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\ProcessMonitor.h">
+    <ClInclude Include="include\ProcessFinder.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\Common.h">
@@ -29,7 +29,7 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\ProcessMonitor.cpp">
+    <ClCompile Include="src\ProcessFinder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
