@@ -153,11 +153,11 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="include\Common.h" />
-    <ClInclude Include="include\ProcessMonitor.h" />
+    <ClInclude Include="include\ProcessFinder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="src\ProcessMonitor.cpp" />
+    <ClCompile Include="src\ProcessFinder.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

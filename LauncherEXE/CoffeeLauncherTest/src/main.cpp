@@ -21,7 +21,7 @@ using namespace std;
 #include <CoffeeUtil/include/include.h>
 #pragma comment(lib, "CoffeeUtil.lib")
 
-#include <CoffeeProcSearch/include/ProcessMonitor.h>
+#include <CoffeeProcSearch/include/ProcessFinder.h>
 #pragma comment(lib, "CoffeeProcSearch.lib")
 
 namespace EXAMPLE {
@@ -155,5 +155,8 @@ int main()
 
     BOOL bIsX64 = IsX64Process(17596);
     printf("%d", bIsX64);
+
+    BOOL bStatusFindByName = FindProcessByName((char*)"windbg.exe");
+    BOOL bStatusFindByID = FindProcessFromID(17252);
 
 }
