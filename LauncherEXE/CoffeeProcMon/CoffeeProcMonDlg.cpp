@@ -54,17 +54,21 @@ CCoffeeProcMonDlg::CCoffeeProcMonDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_COFFEEPROCMON_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+
+    m_ProcMonThread = NULL;
 }
 
 void CCoffeeProcMonDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+    CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_EDIT1, m_EditProc);
 }
 
 BEGIN_MESSAGE_MAP(CCoffeeProcMonDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+    ON_BN_CLICKED(IDOK, &CCoffeeProcMonDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +157,33 @@ HCURSOR CCoffeeProcMonDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CCoffeeProcMonDlg::OnBnClickedOk()
+{
+    // TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+    //CDialogEx::OnOK();
+
+    CString csProc;
+    m_EditProc.GetWindowTextW(csProc);
+
+    const LPWSTR wcsProc = csProc.GetBuffer();
+    const int nLenProc = csProc.GetLength();
+
+    size_t memSize = sizeof(char) * nLenProc + 1;
+    char* tempProc = (char*)malloc(memSize);
+    memset(tempProc, 0x00, memSize);
+
+    // 멀티바이트를 구한다.
+    WideCharToMultiByte(CP_UTF8, 0, wcsProc, nLenProc, tempProc, nLenProc, NULL, NULL);
+
+
+
+
+    const BOOL isFindProc = FindProcessByName(tempProc);
+    MessageBox(isFindProc ? L"Find !" : L"Not Found !", L"Caption");
+
+
+
+   
+}
