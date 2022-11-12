@@ -15,7 +15,12 @@
 // 이 클래스의 구현에 대해서는 CoffeeTray.cpp을(를) 참조하세요.
 //
 
-class CCoffeeTrayApp : public CWinApp
+
+#include "MutexCreator/\include/MutexCreator.h"
+#include "MutexID.h"
+#pragma comment(lib, "MutexCreator.lib")
+
+class CCoffeeTrayApp : public CWinApp, CMutexCreator
 {
 public:
 	CCoffeeTrayApp();
