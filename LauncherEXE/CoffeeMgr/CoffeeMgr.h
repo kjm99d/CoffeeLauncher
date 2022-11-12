@@ -10,12 +10,16 @@
 
 #include "resource.h"		// 주 기호입니다.
 
+#include "MutexCreator/include/MutexCreator.h"
+#include "MutexID.h"
+#pragma comment(lib, "MutexCreator.lib")
+
 
 // CCoffeeMgrApp:
 // 이 클래스의 구현에 대해서는 CoffeeMgr.cpp을(를) 참조하세요.
 //
 
-class CCoffeeMgrApp : public CWinApp
+class CCoffeeMgrApp : public CWinApp, CMutexCreator
 {
 public:
 	CCoffeeMgrApp();
