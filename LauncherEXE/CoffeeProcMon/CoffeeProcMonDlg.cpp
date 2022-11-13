@@ -62,6 +62,7 @@ void CCoffeeProcMonDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_EDIT1, m_EditProc);
+    DDX_Control(pDX, IDC_EDIT2, m_EditPid);
 }
 
 BEGIN_MESSAGE_MAP(CCoffeeProcMonDlg, CDialogEx)
@@ -69,6 +70,7 @@ BEGIN_MESSAGE_MAP(CCoffeeProcMonDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
     ON_BN_CLICKED(IDOK, &CCoffeeProcMonDlg::OnBnClickedOk)
+    ON_BN_CLICKED(IDC_BUTTON1, &CCoffeeProcMonDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -158,6 +160,20 @@ HCURSOR CCoffeeProcMonDlg::OnQueryDragIcon()
 }
 
 
+void* LoadLibTest() {
+    HMODULE mod = LoadLibraryA("CoffeeLicense.dll");
+    if (mod)
+    {
+        ::MessageBoxA(NULL, "Load Lib Success", "FF", MB_OK);
+    }
+    else
+    {
+        ::MessageBoxA(NULL, "Load Lib Failure", "FF", MB_OK);
+
+    }
+
+    return NULL;
+}
 
 void CCoffeeProcMonDlg::OnBnClickedOk()
 {
@@ -183,7 +199,66 @@ void CCoffeeProcMonDlg::OnBnClickedOk()
     const BOOL isFindProc = FindProcessByName(tempProc);
     MessageBox(isFindProc ? L"Find !" : L"Not Found !", L"Caption");
 
+    
+    
+}
 
 
-   
+void CCoffeeProcMonDlg::OnBnClickedButton1()
+{
+    // TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+    CString csPid;
+    m_EditPid.GetWindowTextW(csPid);
+
+    DWORD dwPid = _ttoi(csPid.GetBuffer());
+
+    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
+    if (hProcess)
+    {
+
+        // DLL 로딩 함수 구하고 
+        HMODULE hKernel32 = LoadLibrary(L"Kernel32.dll");
+        if (!hKernel32)
+        {
+            OutputDebugString(_T("Error: LoadLibrary Kernel32.dll "));
+        }
+        FARPROC lpfnLoadLibrary = GetProcAddress(hKernel32, "LoadLibraryA");
+
+        // 프로세스 핸들로해서 힙 공간 만들고
+        LPVOID dllPathAlloc = VirtualAllocEx(hProcess, NULL, sizeof(WCHAR) * MAX_PATH, MEM_COMMIT, PAGE_READWRITE);
+        if (dllPathAlloc == NULL)
+        {
+            MessageBox(_T("Error: VirtualAllocEx  ", L"Alert Error", MB_ICONERROR));
+        }
+        else
+        {
+            // 메모리 공간 할당에 성공하면
+
+
+            // 해당 메모리 공간에 문자열 정보 써준다음
+            const char* dll = "CoffeeLicense.dll";
+            int nLenDLL = strlen(dll);
+            if (!WriteProcessMemory(hProcess, dllPathAlloc, dll, nLenDLL, NULL))
+            {
+                OutputDebugString(_T("Error: WriteProcessMemory  "));
+            }
+
+            HANDLE hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)lpfnLoadLibrary, dllPathAlloc, NULL, NULL);
+
+            if (hThread == NULL)
+            {
+                MessageBox(L"CreateRemoteThread Failure");
+            }
+
+
+        }
+     
+        
+
+        
+    }
+    else
+    {
+        MessageBox(L"OpenProcess Failure", L"Alert Error", MB_ICONERROR);
+    }
 }
