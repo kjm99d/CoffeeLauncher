@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include "CoffeeProcSearch\include\ProcessFinder.h"
+#pragma comment(lib, "CoffeeProcSearch.lib")
+
 
 // CCoffeeProcMonDlg 대화 상자
 class CCoffeeProcMonDlg : public CDialogEx
@@ -31,4 +34,12 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+
+
+private:
+    HANDLE m_ProcMonThread; // 실제로 프로세스 모니터링 역할을 하는 스레드의 핸들 값
+public:
+    CEdit m_EditProc;
+    afx_msg void OnBnClickedOk();
 };

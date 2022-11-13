@@ -51,7 +51,7 @@ END_MESSAGE_MAP()
 
 
 CCoffeeMgrDlg::CCoffeeMgrDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_COFFEEMGR_DIALOG, pParent)
+    : CDialogEx(IDD_COFFEEMGR_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
