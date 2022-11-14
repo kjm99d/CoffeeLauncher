@@ -42,4 +42,6 @@ private:
 public:
     CEdit m_EditProc;
     afx_msg void OnBnClickedOk();
+    CEdit m_EditPid;
+    afx_msg void OnBnClickedButton1();
 };
