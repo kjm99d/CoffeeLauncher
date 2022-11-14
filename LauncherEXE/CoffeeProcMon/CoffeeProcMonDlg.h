@@ -4,6 +4,7 @@
 
 #pragma once
 
+
 #include "CoffeeProcSearch\include\ProcessFinder.h"
 #pragma comment(lib, "CoffeeProcSearch.lib")
 
