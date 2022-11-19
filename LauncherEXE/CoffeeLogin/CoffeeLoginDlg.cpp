@@ -9,6 +9,7 @@
 #include "afxdialogex.h"
 
 #include "StaticLogin.h"
+#include "HTTPLogin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -162,6 +163,31 @@ HCURSOR CCoffeeLoginDlg::OnQueryDragIcon()
 }
 
 
+void WinHttpRequest()
+{
+    CRequest client;
+
+    client.Open(RequestMethod::kGET, L"http://127.0.0.1:5000/form");
+    client.SetHeader(L"user-agent", L"Hello");
+    client.Send();
+
+    DWORD dwStatusCode = client.GetStatusCode();
+
+    PBYTE responseBuffer = NULL;
+    DWORD dwReadDataSize = 0;
+
+    if (dwStatusCode != 200)
+    {
+        return void();
+    }
+
+    while (client.GetBuffer(responseBuffer, dwReadDataSize))
+    {
+        printf("%s", responseBuffer);
+    }
+};
+
+
 
 void CCoffeeLoginDlg::OnBnClickedButtonLogin()
 {
@@ -178,8 +204,11 @@ void CCoffeeLoginDlg::OnBnClickedButtonLogin()
 		return void();
 	}
 
-	CStaticLogin login;
-	BOOL LoginStatus = login.Login(strUserId, strUserPw);
+	ILogin * login;
+    login = new CHttpLogin("http://127.0.0.1:8080/api/user/register");
+    //login = new CHttpLogin("https://github.com/");
+    //WinHttpRequest();
+	BOOL LoginStatus = login->Login(strUserId, strUserPw);
 	if (LoginStatus)
 	{
 		MessageBox(L"로그인 성공");
