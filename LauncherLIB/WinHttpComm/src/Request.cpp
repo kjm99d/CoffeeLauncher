@@ -12,8 +12,42 @@ CRequest::~CRequest()
 	Close();
 }
 
+void CRequest::Open(RequestMethod method, const char* url)
+{
+    wchar_t szUrl[2048] = { 0, };
+    MultiByteToWideChar(CP_ACP, 0, url, -1, szUrl, sizeof(szUrl) / sizeof(wchar_t));
+
+    Open(method, szUrl);
+}
+
+void CRequest::SetHttpFlag(DWORD& dwFlag)
+{
+    INTERNET_SCHEME nScheme = m_urlComponents.nScheme;
+    switch (nScheme) 
+    {
+    case INTERNET_SCHEME_HTTP:
+        break;
+
+
+    case INTERNET_SCHEME_HTTPS:
+        dwFlag |= WINHTTP_FLAG_REFRESH;
+        dwFlag |= WINHTTP_FLAG_SECURE;
+        break;
+
+
+    case INTERNET_SCHEME_FTP:
+        break;
+
+
+    case INTERNET_SCHEME_SOCKS:
+        break;
+    }
+    
+}
+
 void CRequest::Open(RequestMethod method, const wchar_t* url)
 {
+    hSession = 0;
 	// Create Session
 	CreateSession();
 	// SetComponent
@@ -28,11 +62,13 @@ void CRequest::Open(RequestMethod method, const wchar_t* url)
 	}
 
 	const wchar_t* wcsMethod = StrRequestMethodW(method);
+    DWORD dwOpenFlag = 0;
+    SetHttpFlag(dwOpenFlag);
 	m_hRequest = WinHttpOpenRequest(
 		m_hConnect, wcsMethod, m_szUrlPath,
-		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_REFRESH + WINHTTP_FLAG_SECURE);
+		NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, dwOpenFlag);
 	if (m_hRequest == NULL) {
-		WinHttpCloseHandle(m_hConnect);
+		//WinHttpCloseHandle(m_hConnect);
 		WinHttpCloseHandle(hSession);
 		//return -4;
 	}
@@ -58,7 +94,7 @@ void CRequest::Send(const wchar_t* strForm)
 
 }
 
-
+ 
 void CRequest::Send(char* szForm, int nLenForm)
 {
 	LPVOID lpForm = static_cast<LPVOID>(szForm);
@@ -164,14 +200,14 @@ DWORD CRequest::GetStatusCode()
 
 BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 {
-
+    BOOL status = false;
 	RtlZeroMemory(m_ResponseBuffer, sizeof(m_ResponseBuffer));
 	if (m_dwStatusCode == HTTP_STATUS_OK)
 	{
 
 		DWORD dwTempReadDataSize;
 		DWORD dwBufferSize = sizeof(m_ResponseBuffer);
-		BOOL status = WinHttpReadData(m_hRequest, m_ResponseBuffer, dwBufferSize, &dwTempReadDataSize);
+		status = WinHttpReadData(m_hRequest, m_ResponseBuffer, dwBufferSize, &dwTempReadDataSize);
         status = status && static_cast<BOOL>(dwTempReadDataSize > 0);
 		if (status)
 		{
@@ -184,13 +220,15 @@ BOOL CRequest::GetBuffer(PBYTE& pbBufferStorage, DWORD& dwReadDataSize)
 			pbBufferStorage = NULL;
 			dwReadDataSize = 0;
 		}
-		return status;
 	}
 	else {
 		wchar_t szBuf[256];
 		wsprintf(szBuf, TEXT("Status Code %d"), m_dwStatusCode);
 		std::wcout << "실패" << szBuf << std::endl;
 	}
+
+    return status;
+
 }
 void CRequest::Close()
 {

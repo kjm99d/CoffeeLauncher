@@ -128,15 +128,11 @@ namespace EXAMPLE {
     }
 }
 
-void ExampleWinHttp()
-{
-
-
-	return void();
-}
 
 int main()
 {
+    
+
 	/*
 	CURLDownload * downloader = new CURLDownload("http://192.168.0.4:8085/windbg.exe");
 	downloader->DownloadMemory();
@@ -148,6 +144,8 @@ int main()
     //EXAMPLE::fAES128();
 	//EXAMPLE::FileDownload();
     //EXAMPLE::ReadRegistry();
+
+    EXAMPLE::WinHttpRequest();
 
     BOOL bit = OS::Is64Bit();
     OS::eType typeOS = OS::CurrentWindowVersion();

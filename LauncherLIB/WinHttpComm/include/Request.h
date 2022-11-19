@@ -59,7 +59,16 @@ public:
 	 * \param method - RequestMethod Enum 값으로 설정된 열거 타입으로 지정되어 있음.
 	 * \param url - 요청하고자 하는 웹서버의 주소정보.
 	 */
-	void Open(RequestMethod method, const wchar_t* url);
+    void Open(RequestMethod method, const wchar_t* url);
+
+    /**
+     * @brief 세션을 열고 동작에 필요한 URL 정보를 파싱하는 함수.
+     *
+     *
+     * \param method - RequestMethod Enum 값으로 설정된 열거 타입으로 지정되어 있음.
+     * \param url - 요청하고자 하는 웹서버의 주소정보.
+     */
+    void Open(RequestMethod method, const char* url);
 
 	/**
 	 * \brief 요청헤더를 설정합니다.
@@ -136,7 +145,7 @@ protected:
 private:
 	void CreateSession(const wchar_t * session = NULL);
 	void SetComponent(const wchar_t* url);
-
+    void SetHttpFlag(DWORD& dwFlag);
 
 	void Close();
 
