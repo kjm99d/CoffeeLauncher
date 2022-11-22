@@ -4,7 +4,7 @@
 
 class COFFEELICENSE_EXPORT CHardwareInfo {
 public:
-    const CHardwareInfo* GetInstance();
+    static CHardwareInfo* GetInstance();
 
 public:
     std::wstring GetBiosSerial();
@@ -18,3 +18,10 @@ private:
     HardwareId m_hwid;
 
 };
+
+extern "C" {
+
+    COFFEELICENSE_EXPORT char * GetBiosSerial();
+    COFFEELICENSE_EXPORT char * GetCpuProcessorId();
+
+}
