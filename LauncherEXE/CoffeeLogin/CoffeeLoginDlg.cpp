@@ -205,7 +205,7 @@ void CCoffeeLoginDlg::OnBnClickedButtonLogin()
 	}
 
 	ILogin * login;
-    login = new CHttpLogin("http://127.0.0.1:8080/api/user/register");
+    login = new CHttpLogin("http://agassi.gabia.io/member/login");
     //login = new CHttpLogin("https://github.com/");
     //WinHttpRequest();
 	BOOL LoginStatus = login->Login(strUserId, strUserPw);

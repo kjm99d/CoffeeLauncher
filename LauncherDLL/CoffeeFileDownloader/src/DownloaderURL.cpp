@@ -1,5 +1,4 @@
 ﻿#include <Windows.h>
-#include <stringapiset.h>
 #include "DownloaderURL.h"
 #pragma comment(lib, "WinHttpComm.lib")
 

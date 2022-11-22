@@ -18,7 +18,7 @@ BOOL CHttpLogin::Login(const wchar_t* userId, const wchar_t* userPw)
 	
 	
 	wchar_t szPayload[4096] = {0,};
-	swprintf_s(szPayload, 4096, L"strUserKey=%s&strBiosSerial=%s", userId, userPw);
+	swprintf_s(szPayload, 4096, L"username=%s&password=%s", userId, userPw);
 	
 	m_client.Send(szPayload);
 	PBYTE res = NULL;
