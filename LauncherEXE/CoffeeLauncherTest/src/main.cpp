@@ -134,10 +134,6 @@ namespace EXAMPLE {
 
 int main()
 {
-    CHardwareInfo* hard = CHardwareInfo::GetInstance();
-    std::wstring bios = hard->GetBiosSerial();
-    std::wstring proc = hard->GetCpuProcessorId();
-    wprintf(L"Bios [%s] Processor [%s] \n", bios.c_str(), proc.c_str());
 
     
 
@@ -153,16 +149,29 @@ int main()
 	//EXAMPLE::FileDownload();
     //EXAMPLE::ReadRegistry();
 
-    EXAMPLE::WinHttpRequest();
+   /// EXAMPLE::WinHttpRequest();
 
     BOOL bit = OS::Is64Bit();
     OS::eType typeOS = OS::CurrentWindowVersion();
-    printf("%d", bit);
+    switch (typeOS)
+    {
+    case OS::eType::kNone:
+        printf(">> kNone \n"); break;
 
-    BOOL bIsX64 = IsX64Process(17596);
-    printf("%d", bIsX64);
 
-    BOOL bStatusFindByName = FindProcessByName((char*)"windbg.exe");
-    BOOL bStatusFindByID = FindProcessFromID(17252);
+    case OS::eType::kWIN_10:
+        printf(">> kWIN_10 \n"); break;
+
+
+    case OS::eType::kWIN_XP:
+        printf(">> kWIN_XP \n"); break;
+
+    }
+
+    printf("OS Is x64 [%d] \n", bit);
+
+    BOOL bIsX64 = IsX64Process(GetCurrentProcessId());
+    printf("This Program is x64 Process [%d] \n", bIsX64);
+
 
 }
