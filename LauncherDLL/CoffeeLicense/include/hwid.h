@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include <vector>
@@ -7,6 +7,7 @@
 #include <comdef.h>
 #include <Wbemidl.h>
 #include <ntddscsi.h>
+#include <algorithm>
 
 #pragma comment(lib, "wbemuuid.lib")
 

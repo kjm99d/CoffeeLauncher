@@ -6,7 +6,7 @@
 #include <CoffeeFileDownloader/include/DownloaderURL.h>
 #pragma comment(lib, "CoffeeFileDownloader.lib")
 
-
+#include <string>
 
 #include <windows.h>
 #include <iostream>
@@ -23,6 +23,9 @@ using namespace std;
 
 #include <CoffeeProcSearch/include/ProcessFinder.h>
 #pragma comment(lib, "CoffeeProcSearch.lib")
+
+#include <CoffeeLicense/include/HARDWAREINFO.h>
+#pragma comment(lib, "CoffeeLicense.lib")
 
 namespace EXAMPLE {
 	void WinHttpRequest()
@@ -131,6 +134,11 @@ namespace EXAMPLE {
 
 int main()
 {
+    CHardwareInfo* hard = CHardwareInfo::GetInstance();
+    std::wstring bios = hard->GetBiosSerial();
+    std::wstring proc = hard->GetCpuProcessorId();
+    wprintf(L"Bios [%s] Processor [%s] \n", bios.c_str(), proc.c_str());
+
     
 
 	/*

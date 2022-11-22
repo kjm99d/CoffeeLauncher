@@ -34,13 +34,15 @@ void CRequest::SetHttpFlag(DWORD& dwFlag)
         dwFlag |= WINHTTP_FLAG_SECURE;
         break;
 
-
+#ifdef INTERNET_SCHEME_FTP
     case INTERNET_SCHEME_FTP:
         break;
+#endif
 
-
+#ifdef INTERNET_SCHEME_FTP
     case INTERNET_SCHEME_SOCKS:
         break;
+#endif
     }
     
 }

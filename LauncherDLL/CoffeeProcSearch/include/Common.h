@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include <Windows.h>
 
 #ifdef COFFEEPROCSEARCH_EXPORTS
