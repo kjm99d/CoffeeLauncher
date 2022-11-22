@@ -76,6 +76,10 @@ OS::eType OS::CurrentWindowVersion()
     {
         return kWIN_7;
     }
+    else if (osInfo.dwMajorVersion == 5 && osInfo.dwMinorVersion == 1)
+    {
+        return kWIN_XP;
+    }
 
     return kNone;
     
