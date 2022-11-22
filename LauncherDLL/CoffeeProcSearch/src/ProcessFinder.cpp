@@ -20,13 +20,14 @@ BOOL IsX64Process(DWORD dwPID)
 {
     BOOL bIsWow64 = 0;
     HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPID);
+    BOOL ret = 0;
     if (hProcess) {
-        IsWow64Process(hProcess, &bIsWow64);
+        ret = IsWow64Process(hProcess, &bIsWow64);
         CloseHandle(hProcess);
     }
 
     
-    return 0 == bIsWow64;
+    return 0 == bIsWow64 && 1 == ret;
 }
 
 BOOL FindProcessFromID(DWORD PID)
