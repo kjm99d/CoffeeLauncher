@@ -68,8 +68,8 @@ const char* GetStringLicense()
 
 // ================================================================================ //
 
-template <typename T = const wchar_t*>
-void QueryWMI(std::wstring WMIClass, std::wstring Field, std::vector <T>& Value, const wchar_t* ServerName = L"ROOT\\CIMV2") {
+//template <typename T = const wchar_t*>
+void QueryWMI(std::wstring WMIClass, std::wstring Field, std::vector <const wchar_t*>& Value, const wchar_t* ServerName = L"ROOT\\CIMV2") {
     std::wstring Query(L"SELECT ");
     Query.append(Field.c_str()).append(L" FROM ").append(WMIClass.c_str());
 
@@ -186,27 +186,9 @@ void QueryWMI(std::wstring WMIClass, std::wstring Field, std::vector <T>& Value,
             nullptr,
             nullptr);
 
-        if (typeid(T) == typeid(long) || typeid(T) == typeid(int)) {
-            Value.push_back((T)Variant.intVal);
-        }
-        else if (typeid(T) == typeid(bool)) {
-            Value.push_back((T)Variant.boolVal);
-        }
-        else if (typeid(T) == typeid(unsigned int)) {
-            Value.push_back((T)Variant.uintVal);
-        }
-        else if (typeid(T) == typeid(unsigned short)) {
-            Value.push_back((T)Variant.uiVal);
-        }
-        else if (typeid(T) == typeid(long long)) {
-            Value.push_back((T)Variant.llVal);
-        }
-        else if (typeid(T) == typeid(unsigned long long)) {
-            Value.push_back((T)Variant.ullVal);
-        }
-        else {
-            Value.push_back((T)((bstr_t)Variant.bstrVal).copy());
-        }
+
+            Value.push_back((const wchar_t*)((bstr_t)Variant.bstrVal).copy());
+        
 
         VariantClear(&Variant);
         ClassObject->Release();

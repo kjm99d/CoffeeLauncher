@@ -37,7 +37,7 @@ char buffer2[4096] = { 0, };
 
 char * GetBiosSerial()
 {
-    std::wstring wstr CHardwareInfo::GetInstance()->GetBiosSerial();
+    std::wstring wstr = CHardwareInfo::GetInstance()->GetBiosSerial();
     std::string message_a;
 
     message_a.assign(wstr.begin(), wstr.end());
