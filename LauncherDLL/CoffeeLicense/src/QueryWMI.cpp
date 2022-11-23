@@ -11,10 +11,11 @@
 #pragma comment(lib, "wbemuuid.lib")
 
 std::wstring StringProcessorId();
-std::wstring StringBaseBoardSerial();
-std::wstring StringDiskDriveSerial();
+std::wstring StringBaseBoardSerial();   // XP Not Supported !
+std::wstring StringDiskDriveSerial();   // XP Not Supported !
 std::wstring StringNetworkMacAddress();
-
+std::wstring StringSystemDriveSerial();
+std::wstring StringSystemInfomation();  // XP Not Supported !
 
 
 
@@ -22,12 +23,44 @@ const char* GetStringLicense()
 {
     static char strLicense[4096] = { 0, };
     memset(strLicense, 0x00, sizeof(strLicense));
-    std::string response;
+    std::string bucket, response;
 
+    /*
+    bucket.append("[ ");
+    std::wstring SysInfo = StringSystemInfomation();
+    response.assign(SysInfo.begin(), SysInfo.end());
+    bucket.append(response);
+    bucket.append(" ]");
+    */
+
+
+    // BaseBoardSerial
+    std::wstring BaseBoardSerial = StringBaseBoardSerial();
+    response.assign(BaseBoardSerial.begin(), BaseBoardSerial.end());
+    bucket.append(response);
+
+    // 프로세서 ID
+    std::wstring ProcessorID = StringProcessorId();
+    response.assign(ProcessorID.begin(), ProcessorID.end());
+    bucket.append(response);
+
+    /*
+    // 네트워크 MAC 주소
     std::wstring MacAddress = StringNetworkMacAddress();
     response.assign(MacAddress.begin(), MacAddress.end());
+    bucket.append(response);
+    */
 
-    sprintf_s(strLicense, 4096, "%s", response.c_str());
+
+    
+
+    // 시스템 디스크 시리얼 넘버
+    std::wstring DriveSerialNumber = StringSystemDriveSerial();
+    response.assign(DriveSerialNumber.begin(), DriveSerialNumber.end());
+    bucket.append(response);
+    
+
+    sprintf_s(strLicense, 4096, "%s", bucket.c_str());
 
     return strLicense;
 }
@@ -211,12 +244,56 @@ std::wstring StringDiskDriveSerial() {
 }
 
 std::wstring StringNetworkMacAddress() {
-    std::vector <const wchar_t*> SerialNumber{};
-    QueryWMI(L"Win32_NetworkAdapter", L"MACAddress", SerialNumber);
+    std::vector <const wchar_t*> Name;
+    std::vector <const wchar_t*> MAC;
+    QueryWMI(L"Win32_NetworkAdapter", L"Name", Name);
+    QueryWMI(L"Win32_NetworkAdapter", L"MACAddress", MAC);
 
-    std::wstring wstr = SerialNumber.at(0);
+    wprintf(L"%s | MAC [%s]\n", Name.at(0), MAC.at(0));
+
+    std::wstring wstr = L"";
 
     return wstr;
+}
+
+std::wstring StringSystemDriveSerial()
+{
+    WCHAR szSysPath[MAX_PATH] = { 0, };
+    UINT nLenSysPath = 0;
+
+    nLenSysPath = GetSystemDirectory(szSysPath, MAX_PATH);
+    WCHAR SystemDrive = szSysPath[0];
+
+    WCHAR szRootPathName[5] = { 0, };
+    swprintf_s(szRootPathName, 5, L"%C:\\", SystemDrive);
+
+
+    DWORD SerialNumber = 0;
+    GetVolumeInformation(szRootPathName, nullptr, 0, &SerialNumber, nullptr, nullptr, nullptr, 0);
+
+    std::wstring StrSerialNumber = std::to_wstring(SerialNumber);
+    
+
+
+    return StrSerialNumber;
+}
+
+std::wstring StringSystemInfomation()
+{
+    std::vector <const wchar_t*> OSName;
+    std::vector <const wchar_t*> OSArchitecture;
+    std::vector <const wchar_t*> OSSerialNumber;
+
+    QueryWMI(L"Win32_OperatingSystem", L"Name", OSName);
+    QueryWMI(L"Win32_OperatingSystem", L"OSArchitecture", OSArchitecture);
+    QueryWMI(L"Win32_OperatingSystem", L"SerialNumber", OSSerialNumber);
+
+    std::wstring response;
+    response.append(OSName.at(0)) + L"|";
+    response.append(OSArchitecture.at(0)) + L"|";
+    response.append(OSSerialNumber.at(0));
+
+    return response;
 }
 
 
