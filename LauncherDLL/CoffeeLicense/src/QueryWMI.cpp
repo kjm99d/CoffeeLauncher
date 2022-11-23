@@ -1,5 +1,5 @@
-﻿#include "WMIQuery.h"
-#include <iostream>
+﻿#include "QueryWMI.h"
+
 #include <string>
 #include <vector>
 
@@ -11,6 +11,29 @@
 #pragma comment(lib, "wbemuuid.lib")
 
 std::wstring StringProcessorId();
+std::wstring StringBaseBoardSerial();
+std::wstring StringDiskDriveSerial();
+std::wstring StringNetworkMacAddress();
+
+
+
+
+const char* GetStringLicense()
+{
+    static char strLicense[4096] = { 0, };
+    memset(strLicense, 0x00, sizeof(strLicense));
+    std::string response;
+
+    std::wstring MacAddress = StringNetworkMacAddress();
+    response.assign(MacAddress.begin(), MacAddress.end());
+
+    sprintf_s(strLicense, 4096, "%s", response.c_str());
+
+    return strLicense;
+}
+
+
+// ================================================================================ //
 
 template <typename T = const wchar_t*>
 void QueryWMI(std::wstring WMIClass, std::wstring Field, std::vector <T>& Value, const wchar_t* ServerName = L"ROOT\\CIMV2") {
@@ -169,22 +192,32 @@ void QueryWMI(std::wstring WMIClass, std::wstring Field, std::vector <T>& Value,
 
 std::wstring StringProcessorId() {
     std::vector <const wchar_t*> SerialNumber{};
-    QueryWMI(L"Win32_BaseBoard", L"SerialNumber", SerialNumber);
-
-
+    QueryWMI(L"Win32_Processor", L"ProcessorId", SerialNumber);
     return SerialNumber.at(0);
 }
 
 
-const char* StringLicense()
-{
-    static char license[4096] = { 0x00, };
-    memset(license, 0x00, sizeof(license) * sizeof(char));
-
-    std::wstring Processor = StringProcessorId();
-    std::string strProcessorId(Processor.begin(), Processor.end());
-    sprintf_s(license, 4096, "%s", strProcessorId.c_str());
-    
-    
-    return license;
+std::wstring StringBaseBoardSerial() {
+    std::vector <const wchar_t*> SerialNumber{};
+    QueryWMI(L"Win32_BaseBoard", L"SerialNumber", SerialNumber);
+    return SerialNumber.at(0);
 }
+
+
+std::wstring StringDiskDriveSerial() {
+    std::vector <const wchar_t*> SerialNumber{};
+    QueryWMI(L"Win32_DiskDrive", L"SerialNumber", SerialNumber);
+    return SerialNumber.at(0);
+}
+
+std::wstring StringNetworkMacAddress() {
+    std::vector <const wchar_t*> SerialNumber{};
+    QueryWMI(L"Win32_NetworkAdapter", L"MACAddress", SerialNumber);
+
+    std::wstring wstr = SerialNumber.at(0);
+
+    return wstr;
+}
+
+
+// ================================================================================ //

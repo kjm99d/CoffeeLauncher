@@ -11,7 +11,7 @@ public:
     std::wstring GetCpuProcessorId();
 
 private:
-    CHardwareInfo() {};
+    CHardwareInfo();
 
 
 private:
@@ -21,7 +21,5 @@ private:
 
 extern "C" {
 
-    COFFEELICENSE_EXPORT char * GetBiosSerial();
-    COFFEELICENSE_EXPORT char * GetCpuProcessorId();
 
 }
