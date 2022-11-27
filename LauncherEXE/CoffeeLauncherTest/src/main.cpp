@@ -22,6 +22,7 @@ using namespace std;
 #pragma comment(lib, "CoffeeUtil.lib")
 
 #include <CoffeeProcSearch/include/ProcessFinder.h>
+#include <CoffeeProcSearch/include/DLLInjector.h>
 #pragma comment(lib, "CoffeeProcSearch.lib")
 
 #include <CoffeeLicense/include/HARDWAREINFO.h>
@@ -172,6 +173,22 @@ int main()
 
     BOOL bIsX64 = IsX64Process(GetCurrentProcessId());
     printf("This Program is x64 Process [%d] \n", bIsX64);
+
+    std::vector<DWORD> lovebeat_ids;
+    while (true)
+    {
+        GetProcessIdFromName("LoveBeat.exe", &lovebeat_ids);
+
+
+
+        for (auto lovebeat : lovebeat_ids) 
+        {
+            printf("LoveBeat Process Found : %d \n", lovebeat);
+            Inject(lovebeat, "C:\\works\\Weave\\weave.dll");
+        }
+    }
+    
+
 
 
 }

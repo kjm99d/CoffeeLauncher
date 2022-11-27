@@ -30,6 +30,58 @@ BOOL IsX64Process(DWORD dwPID)
     return 0 == bIsWow64 && 1 == ret;
 }
 
+BOOL GetProcessIdFromName(const char* pProcessName, std::vector<DWORD>* pids)
+{
+    HANDLE hProcessSnap;
+    HANDLE hProcess;
+    PROCESSENTRY32 pe32;
+    BOOL bStatus = false;
+    pids->clear();
+
+    // Take a snapshot of all processes in the system.
+    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hProcessSnap == INVALID_HANDLE_VALUE)
+    {
+        //printError(TEXT("CreateToolhelp32Snapshot (of processes)"));
+        return FALSE;
+    }
+
+    pe32.dwSize = sizeof(PROCESSENTRY32);
+
+    // Retrieve information about the first process,
+    // and exit if unsuccessful
+    if (!Process32First(hProcessSnap, &pe32))
+    {
+        CloseHandle(hProcessSnap);
+        return FALSE;
+    }
+
+    do
+    {
+        hProcess = OpenProcess(PROCESS_ALL_ACCESS, TRUE, pe32.th32ProcessID);
+        if (hProcess)
+        {
+            const WCHAR* szFileName = pe32.szExeFile;
+            const DWORD dwPid = pe32.th32ProcessID;
+
+            char szBuffer[MAX_PATH] = { 0, };
+            WideCharToMultiByte(CP_UTF8, 0, szFileName, lstrlenW(szFileName), szBuffer, MAX_PATH, NULL, NULL);
+
+            if (0 == strcmp("LoveBeat.exe", szBuffer)) {
+                pids->push_back(dwPid);
+            }
+
+            CloseHandle(hProcess);
+        }
+
+
+    } while (Process32Next(hProcessSnap, &pe32));
+
+    CloseHandle(hProcessSnap);
+
+    return pids->empty() > 0;
+}
+
 BOOL FindProcessFromID(DWORD PID)
 {
     FIND_PROCESS_INFO info;
