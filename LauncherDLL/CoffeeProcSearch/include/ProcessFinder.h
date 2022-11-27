@@ -35,6 +35,9 @@ extern "C" {
     COFFEEPROCSEARCH_API BOOL IsX64Process(DWORD dwPID);
 
 
+    COFFEEPROCSEARCH_API BOOL GetProcessIdFromName(const char * pProcessName, std::vector<DWORD> * pids);
+
+
 #if __cplusplus
 }
 #endif
