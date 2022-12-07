@@ -1,8 +1,11 @@
 ﻿#include "DLLInjector.h"
 #include <tlhelp32.h>
+#include <shlwapi.h>
 #include <stdio.h>
 
-BOOL IsModuleExistInProcessId(DWORD dwPID, char * findModule)
+#pragma comment(lib, "shlwapi.lib")
+
+BOOL IsModuleExistInProcessId(DWORD dwPID, char* findModule)
 {
     HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
     MODULEENTRY32 me32;
@@ -22,7 +25,7 @@ BOOL IsModuleExistInProcessId(DWORD dwPID, char * findModule)
     //  and exit if unsuccessful 
     if (!Module32First(hModuleSnap, &me32))
     {
-       //printError(TEXT("Module32First"));  // Show cause of failure 
+        //printError(TEXT("Module32First"));  // Show cause of failure 
         CloseHandle(hModuleSnap);     // Must clean up the snapshot object! 
         return(FALSE);
     }
@@ -33,7 +36,15 @@ BOOL IsModuleExistInProcessId(DWORD dwPID, char * findModule)
 
     do
     {
-        wprintf_s(L">> ModuleName [%s] \n", me32.szModule);
+        WCHAR szModuleName[1024] = { 0, };
+        int nLen = MultiByteToWideChar(CP_ACP, 0, findModule, strlen(findModule), NULL, NULL);
+        MultiByteToWideChar(CP_ACP, 0, findModule, strlen(findModule), szModuleName, nLen);
+        if (StrStrW(me32.szModule, szModuleName) == me32.szModule) {
+            isFindModule = TRUE;
+            break;
+        }
+
+        //wprintf_s(L">> ModuleName [%s] \n", me32.szModule);
         /*
         _tprintf(TEXT("\n\n     MODULE NAME:     %s"), me32.szModule);
         _tprintf(TEXT("\n     executable     = %s"), me32.szExePath);
@@ -48,11 +59,11 @@ BOOL IsModuleExistInProcessId(DWORD dwPID, char * findModule)
 
     } while (Module32Next(hModuleSnap, &me32));
 
-   // _tprintf(TEXT("\n"));
+    // _tprintf(TEXT("\n"));
 
-    //  Do not forget to clean up the snapshot object. 
+     //  Do not forget to clean up the snapshot object. 
     CloseHandle(hModuleSnap);
-    
+
     return isFindModule;
 }
 
